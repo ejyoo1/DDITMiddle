@@ -174,5 +174,4 @@ public class MemberVO {
 				+ memLike + ", memMemorialType=" + memMemorialType + ", memMemorialDate=" + memMemorialDate
 				+ ", memMileage=" + memMileage + ", memComment=" + memComment + ", memDelete=" + memDelete + "]";
 	}
-	
 }
