@@ -94,7 +94,7 @@
 			</div>
 			<div class="grid-wrap-footer">
 				<div class="btn-box-right">
-					<button type="button" class="btn btn-dark" onclick="goMemberNew()">신규등록</button>
+					<button type="button" class="btn btn-dark" onclick="javascript:location.href='/MiddleProjectTest/member/insertForm.do';">신규등록</button>
 					  <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
 				</div>
 			</div>
