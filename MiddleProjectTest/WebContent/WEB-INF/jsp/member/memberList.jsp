@@ -13,14 +13,21 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/MiddleProjectTest/js/member/memberList.js?v=1"></script>
+<script type="text/javascript" src="/MiddleProjectTest/js/member/memberList.js"></script>
 <script type="text/javascript" src="/MiddleProjectTest/js/common/myutils.js"></script>
 
 <title>회원 목록 조회</title>
 </head>
 <body>
+<!-- 세션 출력 영역 -->
+<% 
+	String userType = (String) session.getAttribute("USERTYPE");
+	String memId = (String) session.getAttribute("MEMID");
+%>
 <!-- 본문영역 시작 -->
 	<main id="content">
+		<div></div>
+		<div><%=userType%>(<%=memId%>)로 로그인 하였습니다. </div>
 		<!-- 검색영역 -->
 		<article class="search-wrap">
 			<header class="search-wrap-header">
@@ -94,8 +101,10 @@
 			</div>
 			<div class="grid-wrap-footer">
 				<div class="btn-box-right">
-					<button type="button" class="btn btn-dark" onclick="javascript:location.href='/MiddleProjectTest/member/insertForm.do';">신규등록</button>
-					  <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
+					<button type="button" class="btn btn-dark" onclick="movePageByGet('/MiddleProjectTest/member/insertForm.do')">신규등록</button>
+					<button type="button" class="btn btn-dark" onclick="movePageByGet('/MiddleProjectTest/member/loginForm.do')">로그인</button>
+					<button type="button" class="btn btn-dark" onclick="logout()">로그아웃</button>
+					<button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
 				</div>
 			</div>
 		</article>

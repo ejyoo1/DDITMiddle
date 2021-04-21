@@ -65,55 +65,24 @@ function openZip(){
 
 
 /** 회원정보 저장하기 */
-function save(){
-	// 회원 정보 유효성 체크
-	var result = validate();
-	if(!result) {
-		return;
-	}
-	
-	// 사용자 컨펌
-	if(!confirm("저장하시겠습니까?")) {
-		return;
-	}
-	
-	// DB에 저장하는 ajax 호출
-	$("#formFlag").val("C");
-	// 폼을 전송하는 방법 : $("#fm").serialize() ==> json 텍스트 타입으로 알아서 싹다 가져감(input, select 요소만 가져감, 단 name이 존재해야 함. 이때 VO와 동일하게 써주면 좋음. 서버쪽에서 받을 떄 VO 명과 알아서 매핑해주는 util이 있음.)
-	$.ajax({
-		url : "/JqueryPro/MemberServlet"
-		,type : "post"
-		,data : $("#fm").serialize()
-		,dataType : "json"
-		,success : function(data){
-			alert("저장되었습니다.");
-			
-			//페이지 이동
-			changePage("/JqueryPro/html/member/memberList2.html");
-		}
-		, error : function(xhr){ // 사용자가 잘못한 것이 아니라 관리자가 처리해야 하는 오류
-			alert("실패하였습니다. \n관리자에게 문의하세요.");
-			console.log(xhr);
-		}
-	});
+function save(){ 
+	movePageByPost("/MiddleProjectTest/member/insertForm.do");
 }
 
-function changePage(strUrl){
-	// 방법1
-//	window.location.href = "/JqueryPro/html/member/memberList2.html"; // 직접 지정해주는 방법
-	
-	// 방법 2 ==> form submit
-	var fm = document.getElementById("fm");
-	fm.action = strUrl;// 서블릿을 호출하기도 함
-	fm.method = "post";
-	fm.submit();
+function movePageByGet(url){
+	  console.log("test");
+	  console.log("url" + url);
+	  // 페이지이동 1
+	  location.href = url;
 }
 
-function validate(){
-	// 체크 로직
-//	return false;
-	
-	// 체크가 끝나면
-	return true;
+
+function movePageByPost(url){
+	  //페이지 이동 2 
+	  var fm = document.getElementById("fm");
+	  fm.method = "post"
+	  fm.action = url;
+	  fm.submit();
 }
+
 

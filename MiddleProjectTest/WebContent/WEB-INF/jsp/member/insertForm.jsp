@@ -32,25 +32,6 @@
         </div>
       </div><!-- close ID DIV -->
       
-      
-      <div class="form-group"><!-- start 이름 DIV -->
-        <label class="control-label col-sm-2" for="memName">이름 : </label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="memName"
-            placeholder="이름을 입력하세요" name="memName" required>
-          <span id="spMemName" style="display: none;">영어 대문자와 한글 사용 가능. 2~20자리</span>
-        </div>
-      </div><!-- close 이름 DIV -->
-      
-      <div class="form-group">
-        <label class="control-label col-sm-2" for="memBir">생년월일 : </label>
-        <div class="col-sm-10">
-          <input type="date" class="form-control" id="memBir" name="memBir"
-            placeholder="생년월일을 입력하세요" required>
-          <span id="spMemBir" style="display: none;">생년월일 형식이 바르지 않습니다.</span>
-        </div>
-      </div><!-- 이메일 종료 -->
-      
       <div class="form-group"><!-- start 비밀번호 DIV -->
         <label class="control-label col-sm-2" for="memPass">비밀번호 : </label>
         <div class="col-sm-10">
@@ -60,22 +41,23 @@
         </div>
       </div><!-- close 비밀번호 DIV -->
       
-      <div class="form-group row"><!-- start 휴대폰번호 DIV -->
-        <label class="control-label col-sm-2 required" for="memHp">휴대폰 번호 : </label>
+	  <div class="form-group"><!-- start 이름 DIV -->
+        <label class="control-label col-sm-2" for="memName">이름 : </label>
         <div class="col-sm-10">
-          <input type="text" class="form-control form-control1" id="memHp" name="memHp" placeholder="핸드폰번호를 입력하세요" required>
-          <span id="spMemHp" style="display: none;">핸드폰번호 형식이 바르지 않습니다.</span>
+          <input type="text" class="form-control" id="memName"
+            placeholder="이름을 입력하세요" name="memName" required>
+          <span id="spMemName" style="display: none;">영어 대문자와 한글 사용 가능. 2~20자리</span>
         </div>
-      </div><!-- 핸드폰 번호 종료 -->
-      
-      <div class="form-group"><!-- start 이메일 DIV -->
-        <label class="control-label col-sm-2" for="memMail">이메일 : </label>
+      </div><!-- close 이름 DIV -->
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="memBir">생년월일 : </label>
         <div class="col-sm-10">
-          <input type="email" class="form-control" id="memMail" name="memMail"
-            placeholder="email을 입력하세요" required>
-          <span id="spMemMail" style="display: none;">이메일 형식이 바르지 않습니다.</span>
+          <input type="date" class="form-control" id="memBir" name="memBir"
+            placeholder="생년월일을 입력하세요" required>
+          <span id="spMemBir" style="display: none;">생년월일 형식이 바르지 않습니다.</span>
         </div>
-      </div><!-- close 이메일 DIV -->
+      </div><!-- 이메일 종료 -->
       
       <div class="form-group"><!-- start 우편번호 DIV -->
         <label class="control-label col-sm-2" for="memZip">우편번호 : </label>

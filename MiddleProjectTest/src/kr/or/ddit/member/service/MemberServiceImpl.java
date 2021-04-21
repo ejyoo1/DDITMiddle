@@ -79,6 +79,20 @@ public class MemberServiceImpl implements IMemberService {
 		return cnt;
 	}
 
+	public MemberVO checkLoginMember(MemberVO memberVo) {
+		boolean chk = false;
+		try {
+			memberVo = memDao.checkLoginMember(smc, memberVo);
+			if(memberVo != null) {
+				chk = true;
+			}
+			RESULT_LOGGER.debug("★★Service 결과★★ [true:DB에 값이 존재함,false:DB에 값이 없음] : " + chk);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return memberVo;
+	}
+	
 	/**
 	 * DB에 값이 존재하는지 여부를 판단하기 위한 Service - DAO 처리 결과 받아 Controller(Servlet)으로 전송
 	 */

@@ -5,13 +5,6 @@
 
 $(document).ready(function(){
 	
-	 $("#tbZipResult").on("dblclick", function(){ // 파라미터를 더 주어 자식요소 필터링
-		 console.log("바인딩");
-		 
-		 // 주소창(모달창) 닫기
-		 $("#myModal").modal("hide");
-	 });
-	 
 	/* 목록 시작 시 전체 회원 수를 불러옴 */
 	memberListInit();
 	
@@ -80,4 +73,54 @@ $(document).ready(function(){
 		  val = val.replace(/(\d{3})(\d{3,4})(\d{4})/, $1-$2-$3);
 		  return val;
 	  }
-});
+	  
+	  
+	  
+	  
+}); // document.ready 종료 
+
+
+
+function movePageByGet(url){
+	  console.log("test");
+	  console.log("url" + url);
+	  // 페이지이동 1
+	  location.href = url;
+	  
+	  //페이지 이동 2 
+//	  var fm = document.getElementById("tmpFm");
+//	  fm.method = "get"
+//	  fm.action = "url";
+//	  fm.submit();
+}
+
+
+function movePageByPost(url){
+	  // 페이지이동 1
+	  //location.href = "/member/memberNew.do";
+	  
+	  //페이지 이동 2 
+	  var fm = document.getElementById("tmpFm");
+	  fm.method = "get"
+	  fm.action = "url";
+	  fm.submit();
+}
+
+function save(){
+	$.ajax({
+		url : "/MiddleProjectTest/member/insertForm.do"
+		,type : "post"
+		,data : $("#fm").serialize()
+		,dataType : "json"
+		,success : function(data){
+			alert("저장되었습니다.");
+			
+			postMovePage();
+		}
+	});
+}
+
+function logout(){
+	alert("로그아웃 합니다.");
+	movePageByGet("/MiddleProjectTest/member/logout.do");
+}

@@ -26,6 +26,14 @@ public interface IMemberService {
 	public boolean checkMember(String memId);
 	
 	/**
+	 * 로그인 시 회원 ID와 회원 PW에 일치하는 회원이 존재하는지 여부를 알아내는 메서드 
+	 * @param memId 회원 ID
+	 * @param memPass 회원 PW
+	 * @return ID,PW를 가지는 회원이 존재하면 true, 존재하지 않으면 false
+	 */
+	public MemberVO checkLoginMember(MemberVO mv);
+	
+	/**
 	 * 회원정보 전체 목록을 가져오는 메서드
 	 * @return 회원정보를 담고있는 List 객체
 	 */

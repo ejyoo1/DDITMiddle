@@ -51,7 +51,22 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		return cnt;
 	}
-
+	
+	/**
+	 * 로그인 시 회원 정보가 보이는지 확인 
+	 */
+	public MemberVO checkLoginMember(SqlMapClient smc, MemberVO memberVo) throws SQLException{
+		memberVo = (MemberVO) smc.queryForObject("member.checkLoginMember", memberVo);
+		
+		boolean chk = false;
+		if(memberVo != null) { chk = true; } // 테이블에 해당하는 회원이 존재함.
+		
+		RESULT_LOGGER.debug("★★DAO 결과★★ [true:DB에 값이 존재함,false:DB에 값이 없음] : " + chk);
+		
+		return memberVo;
+	}
+	
+	
 	/**
 	 * DB에 값이 존재하는지 여부를 판단하기 위한 DAO - DB 호출 및 결과 Service 로 반환
 	 */

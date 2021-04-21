@@ -33,6 +33,16 @@ public interface IMemberDao {
 	public boolean checkMember(SqlMapClient smc, String memId) throws SQLException;
 	
 	/**
+	 * 로그인 시 회원 ID와 회원 PW에 일치하는 회원이 존재하는지 여부를 알아내는 메서드 
+	 * @param smc SqlMapClient 객체
+	 * @param memId 회원 ID
+	 * @param memPass 회원 PW
+	 * @return ID,PW를 가지는 회원이 존재하면 true, 존재하지 않으면 false
+	 * @throws SQLException
+	 */
+	public MemberVO checkLoginMember(SqlMapClient smc, MemberVO mv) throws SQLException;
+	
+	/**
 	 * DB의 mymember 테이블의 전체 레코드를 가져와서 List에 담아 반환하는 메서드
 	 * @param smc SqlMapClient 객체
 	 * @return 회원정보를 담고있는 List 객체
