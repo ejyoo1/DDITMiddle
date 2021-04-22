@@ -1,0 +1,6 @@
+# key = URL , Value = \uacbd\ub85c
+/commBoard/insert.do=kr.or.ddit.commBoard.handler.InsertCommBoardHandler
+/commBoard/list.do=kr.or.ddit.commBoard.handler.ListCommBoardHandler
+
+
+/adminboard/getAll.do=kr.or.ddit.adminBoard.handler.GetAllAdminBoardHandler

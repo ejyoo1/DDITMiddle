@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="qna">
+
+	<resultMap class="kr.or.ddit.member.vo.MemberVO" id="memMap">
+ 		<result property="userId" column="user_id"/>
+ 		<result property="boardType" column="board_type"/>
+ 		<result property="boardTitle" column="board_title"/>
+ 		<result property="boardContent" column="board_content"/>
+ 		<result property="boardSecret" column="board_secret"/>
+ 		<result property="boardPw" column="board_pw"/>
+ 		<result property="atchFileId" column="atch_file_id"/>
+ 	</resultMap>
+
+	<insert id="insertQnABoard">
+		insert into TB_QNA_BOARD (
+			CODE
+			, BOARD_SEQ
+			, USER_ID
+			, BOARD_TYPE
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, BOARD_DATE
+			, BOARD_SECRET
+			, BOARD_PW
+			, BOARD_ANSWER
+			, ATCH_FILE_ID
+			, BOARD_HITS
+			, BOARD_DELETE
+			)
+		values(
+			'QNA'
+			, BOARD_SEQ.NEXTVAL
+			, #userId#
+			, #boardType#
+			, #boardTitle#
+			, #boardContent#
+			, sysdate
+			, #boardSecret#
+			, if #boardSecret# = 'n' then '0000'
+			     #boardSecret# = 'N' then '0000'
+				 #boardSecret# = 'y' then #boardPw#
+				 #boardSecret# = 'Y' then #boardPw#
+			, 'N'
+			, #atchFileId#
+			, DEFAULT('BOARD_HITS')
+			, DEFAULT('BOARD_DELETE')
+		)
+	</insert>
+	
+	<update id="updateQnABoard">
+		update TB_QNA_BOARD(
+				BOARD_TITLE
+				, BOARD_CONTENT
+				, BOARD_DATE
+				, BOARD_SECRET
+				, BOARD_PW
+				, ATCH_FILE_ID
+				)
+		   set (
+		   		#boardTitle#
+		   		, #boardContent#
+		   		, sysdate
+		   		, #boardSecret#
+				, if #boardSecret# = 'n' then '0000'
+				     #boardSecret# = 'N' then '0000'
+					 #boardSecret# = 'y' then #boardPw#
+					 #boardSecret# = 'Y' then #boardPw#
+				, #atchFileId#
+		   		)
+		 where USER_ID = #userId#
+	</update>
+	
+	<delete id="deleteQnABoard">
+		delete from TB_QNA_BOARD 
+		where USER_ID = #userId# 
+		and BOARD_SEQ = #boardSeq#
+	</delete>
+	
+	<select id="getAllQnABoard">
+		select * 
+		from TB_QNA_BOARD 
+	</select>
+	
+	<select id="getQnABoard">
+		select * 
+		from TB_QNA_BOARD
+		where 1=1
+		<isNotEmpty property="userId">
+		and user_id = #userId#
+		</isNotEmpty>
+		<isNotEmpty property="boardSeq">
+		and board_seq = #boardSeq#
+		</isNotEmpty>
+		<isNotEmpty property="boardTitle">
+		and board_Title = #boardTitle#
+		</isNotEmpty>
+	</select>
+	
+	<select id="getQnA">
+		select * from TB_QNA_BOARD
+	</select>
+</sqlMap>			
+			

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+         PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+         "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userall">
+	<select id="checkLoginUserAll" parameterClass="userAllVO" resultClass="userAllVO">
+		SELECT 	USER_ID	userId
+				,USER_PW userPw
+				,USER_TYPE userType
+				,USER_DELETE userDelete
+				,USER_PHOTO userPhoto
+				,USER_AUTH userAuth
+		FROM TB_USER_ALL
+		WHERE 	1=1
+				AND USER_ID = #userId#
+				AND USER_PW = #userPw#
+	</select>
+	
+	<select id="checkUserAll" parameterClass="String" resultClass="int">
+		SELECT 	count(*) cnt
+		FROM TB_USER_ALL
+		WHERE 	1=1
+				AND USER_ID = #userId#
+	</select>
+</sqlMap>
