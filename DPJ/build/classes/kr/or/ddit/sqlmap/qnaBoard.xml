@@ -5,17 +5,7 @@
 
 <sqlMap namespace="qna">
 
-	<resultMap class="kr.or.ddit.member.vo.MemberVO" id="memMap">
- 		<result property="userId" column="user_id"/>
- 		<result property="boardType" column="board_type"/>
- 		<result property="boardTitle" column="board_title"/>
- 		<result property="boardContent" column="board_content"/>
- 		<result property="boardSecret" column="board_secret"/>
- 		<result property="boardPw" column="board_pw"/>
- 		<result property="atchFileId" column="atch_file_id"/>
- 	</resultMap>
-
-	<insert id="insertQnABoard">
+	<insert id="insertQnABoard" parameterClass="kr.or.ddit.qna.vo.QnABoardVO">
 		insert into TB_QNA_BOARD (
 			CODE
 			, BOARD_SEQ
@@ -24,68 +14,83 @@
 			, BOARD_TITLE
 			, BOARD_CONTENT
 			, BOARD_DATE
+			<isNotEmpty property="boardSecret">
 			, BOARD_SECRET
+			</isNotEmpty>
+			<isNotEmpty property="boardPw">
 			, BOARD_PW
+			</isNotEmpty>
 			, BOARD_ANSWER
 			, ATCH_FILE_ID
-			, BOARD_HITS
-			, BOARD_DELETE
+			,BOARD_HITS
+			,BOARD_DELETE
 			)
 		values(
 			'QNA'
-			, BOARD_SEQ.NEXTVAL
-			, #userId#
-			, #boardType#
+			, SEQ_QNA_BOARD.NEXTVAL
+			, 'yoonsung'
+			, '문의'
 			, #boardTitle#
 			, #boardContent#
 			, sysdate
+			<isNotEmpty property="boardSecret">
 			, #boardSecret#
-			, if #boardSecret# = 'n' then '0000'
-			     #boardSecret# = 'N' then '0000'
-				 #boardSecret# = 'y' then #boardPw#
-				 #boardSecret# = 'Y' then #boardPw#
+			 </isNotEmpty>
+			<isNotEmpty property="boardPw">
+			, #boardPw#
+			 </isNotEmpty>
 			, 'N'
 			, #atchFileId#
-			, DEFAULT('BOARD_HITS')
-			, DEFAULT('BOARD_DELETE')
+			, 0
+			, 'N'
 		)
 	</insert>
 	
-	<update id="updateQnABoard">
-		update TB_QNA_BOARD(
-				BOARD_TITLE
-				, BOARD_CONTENT
-				, BOARD_DATE
-				, BOARD_SECRET
-				, BOARD_PW
-				, ATCH_FILE_ID
-				)
-		   set (
-		   		#boardTitle#
-		   		, #boardContent#
-		   		, sysdate
-		   		, #boardSecret#
-				, if #boardSecret# = 'n' then '0000'
-				     #boardSecret# = 'N' then '0000'
-					 #boardSecret# = 'y' then #boardPw#
-					 #boardSecret# = 'Y' then #boardPw#
-				, #atchFileId#
-		   		)
+	<update id="updateQnABoard" parameterClass="kr.or.ddit.qna.vo.QnABoardVO">
+		update TB_QNA_BOARD
+		   set BOARD_TITLE = #boardTitle#
+		   		, BOARD_CONTENT = #boardContent#
+		   		, BOARD_DATE = sysdate
+		   		, BOARD_SECRET = #boardSecret#
+				<isNotEmpty property="boardPw">
+				, BOARD_PW = #boardPw#
+		   		</isNotEmpty>
+				<isNotEmpty property="atchFileId">
+				, ATCH_FILE_ID = #atchFileId#
+				</isNotEmpty>
 		 where USER_ID = #userId#
+		   and BOARD_SEQ = #boardSeq#
 	</update>
 	
-	<delete id="deleteQnABoard">
-		delete from TB_QNA_BOARD 
+	<update id="deleteQnABoard" parameterClass="kr.or.ddit.qna.vo.QnABoardVO">
+		update TB_QNA_BOARD
+		set BOARD_DELETE = 'Y'
 		where USER_ID = #userId# 
 		and BOARD_SEQ = #boardSeq#
-	</delete>
+	</update>
 	
-	<select id="getAllQnABoard">
+	<resultMap class="kr.or.ddit.qna.vo.QnABoardVO" id="qnaMap">
+ 		<result property="boardSeq" column="board_seq"/>
+ 		<result property="userId" column="user_id"/>
+ 		<result property="boardType" column="board_type"/>
+ 		<result property="boardTitle" column="board_title"/>
+ 		<result property="boardContent" column="board_content"/>
+ 		<result property="boardDate" column="board_date"/>
+ 		<result property="boardSecret" column="board_secret"/>
+ 		<result property="boardPw" column="board_pw"/>
+ 		<result property="boardAnswer" column="board_answer"/>
+ 		<result property="atchFileId" column="atch_file_id"/>
+ 		<result property="boardHits" column="board_hits"/>
+ 		<result property="boardDelete" column="board_delete"/>
+ 	</resultMap>
+	
+	<select id="getAllQnABoard" resultMap="qnaMap">
 		select * 
 		from TB_QNA_BOARD 
+		where board_delete = 'N'
 	</select>
 	
-	<select id="getQnABoard">
+	<select id="getQnABoard" parameterClass="kr.or.ddit.qna.vo.QnABoardVO" resultMap="qnaMap">
 		select * 
 		from TB_QNA_BOARD
 		where 1=1
@@ -100,8 +105,7 @@
 		</isNotEmpty>
 	</select>
 	
-	<select id="getQnA">
-		select * from TB_QNA_BOARD
+	<select id="getQnA" parameterClass="String" resultMap="qnaMap">
+		select * from TB_QNA_BOARD where board_seq = #boardSeq#
 	</select>
-</sqlMap>			
-			
+</sqlMap>
