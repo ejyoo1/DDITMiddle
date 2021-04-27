@@ -1,0 +1,10 @@
+package kr.or.ddit.restInfo.dao;
+
+/**
+ * 실제 DB와 연결해서 SQL문을 수행하여 결과를 작성한다.
+ * @author 유은지
+ * insert 는 생성하지 않음. userAll에서부터 자식 관계로 있음 
+ */
+public interface IRestInfoDao {
+	
+}

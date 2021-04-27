@@ -1,0 +1,13 @@
+package kr.or.ddit.partyJoin.service;
+
+import kr.or.ddit.partyJoin.vo.PartyJoinVO;
+
+public interface IPartyJoinService {
+
+	public int insertPartyJoin(PartyJoinVO pv);
+                                              
+	public int deletePartyJoin(PartyJoinVO pv);
+	                                          
+	public int countJoinMember(long boardSeq);
+	
+}

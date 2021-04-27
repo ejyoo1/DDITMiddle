@@ -1,0 +1,205 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%-- <script src="<%=request.getContextPath() %>/assets/js/restaurant/restaurant.js"> --%>
+<script>
+						function searchHandler(searchType,btnNum) {
+							$("#searchType").val(searchType);
+							$("#btnNum").val(btnNum);
+							
+							var fm = document.getElementById("fm");
+							fm.method = "post"
+							fm.action = "/DPJ/searchRest/list.do";
+							fm.submit();
+						}
+						</script>
+<%@include file="/WEB-INF/view/common/mainNav.jsp"%>
+
+<body>
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand col-lg-2-h1" href="index.html">굿끼제먹</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse " id="navbarResponsive">
+				<ul class="navbar-nav ml-auto col-lg-7-h1">
+					<li class="nav-item"><a class="nav-link" href="#">이벤트 게시판</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">식당검색</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Meal파티
+							게시판</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">커뮤니티 게시판</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">고객 센터</a></li>
+				</ul>
+			</div>
+			<div class="container col-sm-3">
+				<ul class="navbar-nav text-uppercase ml-auto">
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="#contact">로그인</a></li>
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="#contact">회원가입</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Page Content -->
+	<div class="container">
+
+		<div class="row">
+
+			<!-- Blog Entries Column -->
+			<div class="col-md-8">
+
+				<h1 class="my-4">식당 검색</h1>
+
+				<!-- Blog Post -->
+				<div class="card mb-4">
+
+					<div class="card-body">
+						<h2 class="card-title">가격</h2>
+						<div class="d-flex justify-content-start col-md-12">
+							<button class="btn btn-md btn-success col-md-2" type="button"
+								onclick="alert('1000워언')">5000원</button>
+							&nbsp;
+							<button class="btn btn-md btn-success col-md-2" type="button"
+								onclick="">6000원</button>
+							&nbsp;
+							<button class="btn btn-md btn-success col-md-2" type="button"
+								onclick="">7000원</button>
+							&nbsp;
+							<button class="btn btn-md btn-success col-md-2" type="button"
+								onclick="">8000원</button>
+							&nbsp;
+							<button class="btn btn-md btn-success col-md-2" type="button"
+								onclick="">9000원</button>
+							&nbsp;
+							<button class="btn btn-md btn-success col-md-2" type="button"
+								onclick="">
+								10000원
+							</button>
+						</div>
+						<hr>
+						<h2 class="card-title">거리</h2>
+						<div class="d-flex justify-content-start col-md-12">
+							<button class="btn btn-md btn-info col-md-2" type="button"
+								onclick="searchHandler('street','1')">
+								3분<br>(100m)
+							</button>
+							&nbsp;
+							<button class="btn btn-md btn-info col-md-2" type="button"
+								onclick="searchHandler('street','2')">
+								5분<br>(300m)
+							</button>
+							&nbsp;
+							<button class="btn btn-md btn-info col-md-2" type="button"
+								onclick="searchHandler('street','3')">
+								10분<br>(600m)
+							</button>
+							&nbsp;
+							<button class="btn btn-md btn-info col-md-2" type="button"
+								onclick="searchHandler('street','4')">
+								15분<br>(900m)
+							</button>
+							&nbsp;
+						</div>
+						
+						<hr>
+						<h2 class="card-title">분류</h2>
+						<div class="d-flex justify-content-start col-md-12">
+							<button class="btn btn-md btn-danger col-md-2" type="button"
+								onclick="alert('분류함수')">한식</button>
+							&nbsp;
+							<button class="btn btn-md btn-danger col-md-2" type="button"
+								onclick="">중식</button>
+							&nbsp;
+							<button class="btn btn-md btn-danger col-md-2" type="button"
+								onclick="">양식</button>
+							&nbsp;
+							<button class="btn btn-md btn-danger col-md-2" type="button"
+								onclick="">일식</button>
+							&nbsp;
+						</div>
+
+
+
+					</div>
+					<div class="card-footer text-muted col-12">
+					<h2 class="card-title">검색결과</h2>
+						<table class="table col-12">
+							<tbody class="col-12">
+								<tr class="d-flex justify-content-start">
+									<th class="col-6">식당이름</th>
+									<th class="col-2">가격</th>
+									<th class="col-2">거리</th>
+									<th class="col-2">분류</th>
+								</tr>
+								<tr class="d-flex justify-content-start">
+									<td class="col-6">롤린</td>
+									<td class="col-2">5000원</td>
+									<td class="col-2">3m</td>
+									<td class="col-2">한식 </td>
+								</tr>
+								<tr class="d-flex justify-content-start">
+									<td class="col-6">롤린</td>
+									<td class="col-2">6000원</td>
+									<td class="col-2">5m</td>
+									<td class="col-2">양식 </td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- Search Widget -->
+				<div class="card my-4">
+					<h5 class="card-header">Search</h5>
+					<div class="card-body">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="식당 이름 검색하기">
+							<span class="input-group-append">
+								<button class="btn btn-secondary" type="button">Go!</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Sidebar Widgets Column -->
+			<div class="col-md-4">
+				<!-- Side Widget -->
+				<div class="card my-4">
+					<h5 class="card-header">김밥천국</h5>
+					<img src="assets/img/logos/1.jpg">
+					<div class="card-body">대충 식당 좋으니까 먹으라는 내용</div>
+				</div>
+
+				<div class="card my-4">
+					<h5 class="card-header">울트라 콜 2번째</h5>
+					<img src="assets/img/logos/1.jpg">
+					<div class="card-body">대충 식당 좋으니까 먹으라는 내용</div>
+				</div>
+
+				<div class="card my-4">
+					<h5 class="card-header">울트라 콜 2번째</h5>
+					<div class="card-body">대충 식당 좋으니까 먹으라는 내용</div>
+				</div>
+				
+			</div>
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<form id="fm">
+		<input type="hidden" id="searchType">
+		<input type="hidden" id="btnNum">
+	</form>
+	
+	
+	<!-- /.container -->
+<%@include file="/WEB-INF/view/common/bottom.jsp"%>

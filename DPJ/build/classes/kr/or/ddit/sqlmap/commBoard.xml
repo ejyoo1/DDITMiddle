@@ -12,12 +12,11 @@
         	VALUES(#code#,SEQ_COMM_BOARD.NEXTVAL,#userId#,#boardTitle#, SYSDATE, #boardContent#, #atchFileId#)
  	</insert>
 	
-<!--  	<select id="getAllBoardList" parameterClass="kr.or.ddit.commBoard.vo.CommBoardVO" resultClass="kr.or.ddit.commBoard.vo.CommBoardVO"> -->
  	<select id="getAllBoardList" parameterClass="kr.or.ddit.common.vo.PagingVO" resultClass="kr.or.ddit.commBoard.vo.CommBoardVO">
  		SELECT BB.* FROM (SELECT AA.*, ROWNUM 
  		FROM
  		(SELECT CODE          code         
-			  ,BOARD_SEQ     boardSeqNum    
+			  ,BOARD_SEQ     boardSeq   
 			  ,USER_ID       userId      
 			  ,BOARD_TITLE   boardTitle  
 			  ,BOARD_DATE    boardDate   
@@ -37,9 +36,9 @@
 	 		from TB_COMM_BOARD
 	 </select>
  	
- 	<select id="getBoardInfo" parameterClass="String" resultClass="kr.or.ddit.commBoard.vo.CommBoardVO">
+ 	<select id="getBoardInfo" parameterClass="long" resultClass="kr.or.ddit.commBoard.vo.CommBoardVO">
  		select CODE          code         
-			  ,BOARD_SEQ     boardSeqNum    
+			  ,BOARD_SEQ     boardSeq    
 			  ,USER_ID       userId      
 			  ,BOARD_TITLE   boardTitle  
 			  ,BOARD_DATE    boardDate   
@@ -47,7 +46,7 @@
 			  ,ATCH_FILE_ID  atchFileId 
 			  ,BOARD_HITS    boardHitsNumber   
 			  ,BOARD_DELETE  boardDelete 
-		  FROM TB_COMM_BOARD where user_id = #userId#
+		  FROM TB_COMM_BOARD where board_seq = #boardSeq#
  	</select>
  	
 </sqlMap>			

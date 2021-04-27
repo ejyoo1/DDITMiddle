@@ -1,0 +1,131 @@
+package kr.or.ddit.restInfo.vo;
+
+public class RestInfoVO {
+	private String REST_CODE;               // 식당코드     
+	private String USER_ID;                 // 아이디      
+	private String REST_CEO_NAME;           // 대표자이름    
+	private String REST_REG_NUM;            // 사업자등록번호  
+	private String REST_TYPE;               // 식당분류     
+	private String REST_NAME;               // 식당이름     
+	private String REST_DISTANCE;           // 식당거리     
+	private String REST_ZIP;                // 식당우편번호   
+	private String REST_ADD1;               // 식당주소1    
+	private String REST_ADD2;               // 식당주소2    
+	private String REST_TEL;                // 식당전화번호   
+	private String REST_LAT;                // 식당위도     
+	private String REST_LNG;                // 식당경도     
+	private String REST_REVIEW_CNT;         // 식당리뷰수    
+	private String REST_FAV_CNT;            // 식당찜수     
+	private String REST_SCORE_AVR;          // 식당평균평점   
+	private String ATCH_FILE_ID;            // 첨부파일아이       
+	private String ATCH_REG_ID;             // 인증서류첨부아이디
+	
+	public String getREST_CODE() {
+		return REST_CODE;
+	}
+	public void setREST_CODE(String rEST_CODE) {
+		REST_CODE = rEST_CODE;
+	}
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
+	public String getREST_CEO_NAME() {
+		return REST_CEO_NAME;
+	}
+	public void setREST_CEO_NAME(String rEST_CEO_NAME) {
+		REST_CEO_NAME = rEST_CEO_NAME;
+	}
+	public String getREST_REG_NUM() {
+		return REST_REG_NUM;
+	}
+	public void setREST_REG_NUM(String rEST_REG_NUM) {
+		REST_REG_NUM = rEST_REG_NUM;
+	}
+	public String getREST_TYPE() {
+		return REST_TYPE;
+	}
+	public void setREST_TYPE(String rEST_TYPE) {
+		REST_TYPE = rEST_TYPE;
+	}
+	public String getREST_NAME() {
+		return REST_NAME;
+	}
+	public void setREST_NAME(String rEST_NAME) {
+		REST_NAME = rEST_NAME;
+	}
+	public String getREST_DISTANCE() {
+		return REST_DISTANCE;
+	}
+	public void setREST_DISTANCE(String rEST_DISTANCE) {
+		REST_DISTANCE = rEST_DISTANCE;
+	}
+	public String getREST_ZIP() {
+		return REST_ZIP;
+	}
+	public void setREST_ZIP(String rEST_ZIP) {
+		REST_ZIP = rEST_ZIP;
+	}
+	public String getREST_ADD1() {
+		return REST_ADD1;
+	}
+	public void setREST_ADD1(String rEST_ADD1) {
+		REST_ADD1 = rEST_ADD1;
+	}
+	public String getREST_ADD2() {
+		return REST_ADD2;
+	}
+	public void setREST_ADD2(String rEST_ADD2) {
+		REST_ADD2 = rEST_ADD2;
+	}
+	public String getREST_TEL() {
+		return REST_TEL;
+	}
+	public void setREST_TEL(String rEST_TEL) {
+		REST_TEL = rEST_TEL;
+	}
+	public String getREST_LAT() {
+		return REST_LAT;
+	}
+	public void setREST_LAT(String rEST_LAT) {
+		REST_LAT = rEST_LAT;
+	}
+	public String getREST_LNG() {
+		return REST_LNG;
+	}
+	public void setREST_LNG(String rEST_LNG) {
+		REST_LNG = rEST_LNG;
+	}
+	public String getREST_REVIEW_CNT() {
+		return REST_REVIEW_CNT;
+	}
+	public void setREST_REVIEW_CNT(String rEST_REVIEW_CNT) {
+		REST_REVIEW_CNT = rEST_REVIEW_CNT;
+	}
+	public String getREST_FAV_CNT() {
+		return REST_FAV_CNT;
+	}
+	public void setREST_FAV_CNT(String rEST_FAV_CNT) {
+		REST_FAV_CNT = rEST_FAV_CNT;
+	}
+	public String getREST_SCORE_AVR() {
+		return REST_SCORE_AVR;
+	}
+	public void setREST_SCORE_AVR(String rEST_SCORE_AVR) {
+		REST_SCORE_AVR = rEST_SCORE_AVR;
+	}
+	public String getATCH_FILE_ID() {
+		return ATCH_FILE_ID;
+	}
+	public void setATCH_FILE_ID(String aTCH_FILE_ID) {
+		ATCH_FILE_ID = aTCH_FILE_ID;
+	}
+	public String getATCH_REG_ID() {
+		return ATCH_REG_ID;
+	}
+	public void setATCH_REG_ID(String aTCH_REG_ID) {
+		ATCH_REG_ID = aTCH_REG_ID;
+	}
+}

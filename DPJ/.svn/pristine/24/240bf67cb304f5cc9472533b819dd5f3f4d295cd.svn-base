@@ -1,0 +1,46 @@
+package kr.or.ddit.restInfo.handler;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import kr.or.ddit.common.handler.CommandHandler;
+
+public class ListSearchRestHandler implements CommandHandler {
+	private static final String VIEW_PAGE = "/WEB-INF/view/searchRest/restaurantSearch.jsp";
+
+	@Override
+	public boolean isRedirect(HttpServletRequest req) {
+		if("GET".equals(req.getMethod())) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public String process(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		if("GET".equals(req.getMethod())) {
+			return VIEW_PAGE;
+		} else {
+			String streetType = req.getParameter("streetType");
+			// 월요일에 서비스 생성해야 함.
+			
+			// 공통화 서비스로 빼야함. (가격, 거리, 분류)
+			
+			// 가격은 식당정보와 메뉴이름이 동시에
+			
+			// 거리는 식당정보만(중복 제외)
+			
+			// 분류는 식당 정보만(중복 제외)
+			
+			// 해당하는 애들은 PrintWrite한 뒤 화면단에서 테이블 생성
+			
+			// 해당하는 식당 버튼 클릭 시 id를 담아 호 ( onclick="location.href=''")
+			
+			// 식당 상세는 info
+			
+			return null; // ajax 처리 
+		}
+	}
+
+}
