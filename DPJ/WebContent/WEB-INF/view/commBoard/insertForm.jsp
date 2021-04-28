@@ -41,13 +41,12 @@ String msg = request.getParameter("msg") == null ? "" : request.getParameter("ms
 								</tr>
 								<tr class="d-flex text-left">
 									<td class="col-1 "><h2>작성자</h2></td>
-									<td class="col-3 "><%=userId %></td>
-
-									<th class="col-6 "></th>
+									<td class="col-2 "><%=userId %></td>
+									<td class="col-9 "></td>
 								</tr>
 								<tr class="d-flex text-left">
-									<td class="col-12"><input type="file" name="atchFileId">
-									</td>
+									<td class="col-1"><input type="file" name="atchFileId"></td>
+									<td class="col-11 "></td>
 								</tr>
 								<tr class="d-flex text-left">
 									<th class="col-1 "><h2>내용</h2></th>
@@ -60,7 +59,7 @@ String msg = request.getParameter("msg") == null ? "" : request.getParameter("ms
 							<textarea class="form-control" name="boardContent" rows="10" placeholder="내용을 입력하세요." value=""></textarea>
 					</div>
 					<div class="card-footer d-flex justify-content-end">
-						<a class="btn btn-lg btn-secondary"><button type="submit">게시물 등록</button></a>
+						<button class="btn btn-lg btn-secondary" type="submit">게시물 등록</button>
 						&nbsp;&nbsp;
 						&nbsp;&nbsp;
 						<a class="btn btn-lg btn-secondary" href="main.do">목록으로 돌아가기</a>

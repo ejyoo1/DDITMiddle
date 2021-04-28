@@ -97,11 +97,11 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/eventBoard/list.do">이벤트</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/searchRest/list.do">식당검색</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/partyBoard/main.do">Meal파티</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/PARTY/main.do">Meal파티</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/commBoard/main.do">커뮤니티 게시판</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/adminBoardMain/noticeGetAll.do">고객센터</a></li>
-                        <% if(!"null".equals(userId)){ %>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/myPage/main.do">마이페이지</a></li>
+                        <% if("일반회원".equals(userType) || "식당회원".equals(userType)){ %>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/mypage/main.do">마이페이지</a></li>
 						<%} %>
                     </ul>
             </div>
@@ -375,7 +375,7 @@
                                     <img class="img-fluid d-block mx-auto" src="<%=request.getContextPath() %>/assets/img/restau/<%=cntM %>_rest.jpg" alt="" />
                                     <p><%=eventList.get(i).getBoardContent() %></p>
                                     <ul class="list-inline">
-                                        <li>이벤트 기간 : <%=(eventList.get(i).getBoardStart()).substring(0,10) %> ~ <%=(eventList.get(i).getBoardEnd()).substring(0,10) %></li>
+                                        <li>이벤트 기간 : <%=(eventList.get(i).getBoardStart()) %> ~ <%=(eventList.get(i).getBoardEnd()) %></li>
                                         <li>Category: <%=restList.get(i).getRestType() %></li>
                                     </ul>
                                     <button class="btn btn-primary" data-dismiss="modal" type="button">

@@ -1,4 +1,4 @@
-package kr.or.ddit.myPage.handler;
+package kr.or.ddit.mypage.handler;
 
 import java.net.URLEncoder;
 
@@ -14,7 +14,7 @@ import kr.or.ddit.userDdit.service.UserDditServiceImpl;
 import kr.or.ddit.userDdit.vo.UserDditVO;
 
 public class MyPageEditHandler implements CommandHandler {
-	private static final String VIEW_PAGE = "/WEB-INF/view/myPage/myPageForm.jsp";
+	private static final String VIEW_PAGE = "/WEB-INF/view/mypage/mypageForm.jsp";
 
 	@Override
 	public boolean isRedirect(HttpServletRequest req) {
@@ -64,6 +64,7 @@ public class MyPageEditHandler implements CommandHandler {
 			}else if("on".equals(recvMail)){
 				recvMail = "Y";
 			}
+			
 			userDditVo.setRecvMail(recvMail);
 			
 			// 서비스 호출
@@ -82,7 +83,7 @@ public class MyPageEditHandler implements CommandHandler {
 			String redirectUrl = "";
 			
 			redirectUrl = req.getContextPath() + 
-					"/myPage/main.do?msg=" 
+					"/mypage/main.do?msg=" 
 					+ URLEncoder.encode(msg, "UTF-8");
 			return redirectUrl;
 		}

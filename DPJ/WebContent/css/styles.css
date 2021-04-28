@@ -4682,11 +4682,11 @@ a.badge:hover, a.badge:focus {
 
 .badge-primary {
   color: #fff;
-  background-color: #fed136;
+  background-color: #3f6ad8 ;
 }
 a.badge-primary:hover, a.badge-primary:focus {
   color: #fff;
-  background-color: #fec503;
+  background-color: #2651be ;
 }
 a.badge-primary:focus, a.badge-primary.focus {
   outline: 0;

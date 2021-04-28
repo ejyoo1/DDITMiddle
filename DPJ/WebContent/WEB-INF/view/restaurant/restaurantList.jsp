@@ -73,7 +73,7 @@ function searchHandler(searchType,btnNum) {
 										%>
 										<tr class="d-flex justify-content-start">
 											<td class="col-1"><%= (i+1) %></td>
-											<td class="col-3"><a href="<%=request.getContextPath() %>/searchRest/detailRest.do?restCode=<%= restCode %>" ><%= menuList.get(i).getRestName() %></a></td>
+											<td class="col-3"><a href="<%=request.getContextPath() %>/searchRest/detailRest.do?restCode=<%= restCode %>&userId=<%=userId %>" ><%= menuList.get(i).getRestName() %></a></td>
 											<td class="col-3"><%= menuList.get(i).getMenuName() %></td>
 											<td class="col-2"><%= menuList.get(i).getMenuPrice() %></td>
 											<td class="col-1"><%= menuList.get(i).getRestFavCnt() %></td>
@@ -160,47 +160,16 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 //마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
 
 
-
-var positionsss = [];
-for(var i = 0 ; i < contents.length ; i++){
-	console.log("contents-- : " + contents[i]);
-	console.log("lats-- : " + lats[i]);
-	console.log("lngs-- : " + lngs[i]);
-	var position = new Object();
-	position.content = contents[i];
-	position.latlng = new kakao.maps.LatLng(lats[i], lngs[i])
-	positionsss.push(position);
-}
-console.log(positionsss);
-
-// console.log("position : " + position);
-// var Jsonposition = JSON.stringify(position);
-// console.log("Jsonposition : " + Jsonposition);
-
 var positions = [
-	
+	<% for(int i = 0 ; i < menuListSize ; i++) { %>
     {
-        content: '<div>식당1</div>', 
-        latlng: new kakao.maps.LatLng(36.32511083108762, 127.4188418155553)
-    },
-    {
-        content: '<div>식당2</div>', 
-        latlng: new kakao.maps.LatLng(36.32460948398731, 127.41861651001113)
-    },
-    {
-        content: '<div>식당3<br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', 
-        latlng: new kakao.maps.LatLng(36.32438906312071, 127.41984496166852)
-    },
-    {
-        content: '<div>식당4<br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>',
-        latlng: new kakao.maps.LatLng(36.32476075284874, 127.42089638754122)
-    }
+        content: "<div style='width:150px;text-align:center;padding:6px 0;'><%= menuList.get(i).getRestName() %></div>", 
+        latlng: new kakao.maps.LatLng(<%= menuList.get(i).getRestLat() %>, <%= menuList.get(i).getRestLng() %>)
+    } <% if(i != (menuListSize-1)) { %>
+    		,
+   		<%} %> // close if 문
+    <%}%> // close for문
 ];
-
-console.log("positions : " + positions);
-
-
-
 
 // 지도에 마커를 표시합니다 
 var marker = new kakao.maps.Marker({
@@ -269,7 +238,9 @@ for (var i = 0; i < positions.length; i ++) {
     kakao.maps.event.addListener(marker1, 'mouseover', makeOverListener(map, marker1, infowindow));
     kakao.maps.event.addListener(marker1, 'mouseout', makeOutListener(infowindow));
     kakao.maps.event.addListener(marker1, 'click', function() {
-    	location.href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667"; 
+    	<% for(int i = 0 ; i < menuListSize ; i++) { %>
+    	location.href="https://map.kakao.com/link/to/<%= menuList.get(i).getRestName() %>,<%= menuList.get(i).getRestLat() %>,<%= menuList.get(i).getRestLng() %>"; 
+    	<%}%> // close for문
   });
 }
 

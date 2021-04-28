@@ -7,6 +7,7 @@ public class PartyBoardVO extends ConstVO{
 	private String code;
 	private long boardSeq;
 	private String userId;
+	private String userProfile;
 	private String boardTitle;
 	private String boardDate;
 	private String boardContent;
@@ -20,6 +21,7 @@ public class PartyBoardVO extends ConstVO{
 	private long atchFileId = -1;
 	private long boardHit = 1;
 	private String boardDelete = N;
+	private long countList;
 	
 	public String getCode() {
 		return code;
@@ -38,6 +40,12 @@ public class PartyBoardVO extends ConstVO{
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getUserProfile() {
+		return userProfile;
+	}
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
 	}
 	public String getBoardTitle() {
 		return boardTitle;
@@ -116,6 +124,12 @@ public class PartyBoardVO extends ConstVO{
 	}
 	public void setBoardDelete(String boardDelete) {
 		this.boardDelete = boardDelete;
+	}
+	public long getCountList() {
+		return countList;
+	}
+	public void setCountList(long countList) {
+		this.countList = countList;
 	}
 	
 }

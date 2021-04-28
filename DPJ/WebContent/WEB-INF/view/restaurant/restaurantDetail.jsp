@@ -1,6 +1,16 @@
+<%@page import="kr.or.ddit.review.vo.ReviewVO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.or.ddit.restInfo.vo.RestInfoVO"%>
+<%@page import="kr.or.ddit.restInfo.vo.RestFavVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%
+	List<ReviewVO> reviewList = (List<ReviewVO>)request.getAttribute("reviewList");
+	List<RestFavVO> favList = (List<RestFavVO>)request.getAttribute("favList");
+	RestInfoVO rv = (RestInfoVO)request.getAttribute("restVO");
+	int dipsCnt = (Integer)request.getAttribute("dipsCnt");
+%>
 <%@include file="/WEB-INF/view/common/mainNav.jsp"%>
 
 	<!-- Page Content -->
@@ -80,26 +90,48 @@
 						<table class="table" >
 							<tbody>
 								<tr class="d-flex text-left">
-									<th class="col-2 ">식당이름</th>
-									<th class="col-3 " name="boardTitle">롤린</th>
+
+									<th class="col-2 " >식당 이름</th>
+									<th class="col-3 " name="boardTitle"><%=rv.getRestName() %></th>
 									<th class="col-3 "></th>
-									<th class="col-2 "><small>찜한 사람</small></th>
-									<th class="col-2 "name="boardHitsNumber"><small>1</small></th>
-								</tr>
-								<tr class="d-flex text-left">
-									<td class="col-2 ">작성자</td>
-									<td class="col-3 "name="userId">세호아자씨아이디</td>
-									<th class="col-3 "></th>
-									<td class="col-2 "><small>작성일</small></td>
-									<td class="col-2 "name="boardDate"><small>오늘</small></td>
+									<th class="col-2 "><small>찜</small></th>
+									<th class="col-1 ">
+									<%
+										Boolean chkdips = false;
+										for(int i=0; i<favList.size(); i++){
+											if("1".equals(favList.get(i).getRestCode())){//식당코드 :1은 세호불백임
+												chkdips = true;
+											}
+										}
+										if(chkdips == true){
+									%>
+									<img alt="dipsY" src="<%=request.getContextPath() %>/assets/img/restau/heart.png" id="favbtn" onclick="fnFav()"></th>
+									<th class="col-1 "name="dipsCnt" id="dipscnt"><small><%=dipsCnt%></small></th>
+									<%
+										} else if(chkdips == false){
+											
+									%>
+									<img alt="dipsN" src="<%=request.getContextPath() %>/assets/img/restau/eheart.png" id="favbtn" onclick="fnFav()"></th>
+									<th class="col-1 "name="dipsCnt" id="dipscnt"><%=dipsCnt%></th>
+											
+									<%
+										}
+									%>
 								</tr>
 								<tr class="d-flex text-left">
 									<td class="col-12"><img class="col-12" src="/DPJ/assets/img/menu/sehoMenuList.jpg">
 									</td>
 								</tr>
 								<tr class="d-flex text-left">
-									<td class="col-12">
-									안뇽하세요 세호 머스크 임미다. 요즘 세호 불백 맛이 괜춘 하죠? 장사 잘되라고 이벤트 한번 헙니다.
+									<td class="col-3">식당 주소지</td>
+									<td class="col-9">
+									<%=rv.getRestZip() %> <%=rv.getRestAdd1() %> <%=rv.getRestAdd2() %>
+									</td>
+								</tr>
+								<tr class="d-flex text-left">
+									<td class="col-3">식당 전화번호</td>
+									<td class="col-9">
+									<%=rv.getRestTel()%>
 									</td>
 								</tr>
 							</tbody>
@@ -107,9 +139,15 @@
 						<div class="card-footer d-flex justify-content-center">
 							<a class="btn btn-lg btn-secondary" type="button" href="list.do">목록으로 돌아가기</a>
 								&nbsp;&nbsp;
+							<%
+								if(rv.getUserId().equals(userId)){
+							%>
 							<a class="btn btn-lg btn-secondary" type="submit" href="update.do">수정하기</a>
 								&nbsp;&nbsp;
 							<a class="btn btn-lg btn-secondary" type="reset" href="delete.do">삭제하기</a>
+							<%
+								}
+							%>
 					</div>
 						</div>
 					</div>
@@ -118,55 +156,131 @@
 					</div>
 					<div class="card-body">
 						<table class="table table-sm table-hover" >
+						<%
+						if(reviewList.size() > 0){
+							
+							for(int i = 0; i < reviewList.size(); i++ ){
+								%>
 							<tbody>
 								<tr class="d-flex text-left">
-									<th class="col-3"><small>403호 삼촌</small></th>
-									<th class="col-7"><small>2021-04-24</small></th>
-									<th class="col-1 text-sm-right"><small>수정</small></th>
-									<th class="col-1 text-sm-right"><small>삭제</small></th>
+									<th class="col-3"><small id="userId">작성자 : <%=reviewList.get(i).getUserId() %></small></th>
+									<th class="col-3"><small id="rboardTitle"><%=reviewList.get(i).getBoardTitle() %></small></th>
+									<th class="col-2"><small id="score">평점 : <%=reviewList.get(i).getRestScore() %></small></th>
+									<th class="col-2"><small ><%=reviewList.get(i).getBoardDate().substring(0,10) %></small></th>
+									<%
+// 									if(reviewList.get(i).getUserId().equals(session.getAttribute("USERID"))){
+									%>
+									<th class="col-1 text-sm-right" id="upBtn<%=reviewList.get(i).getBoardSeq() %>" onClick="reviewUpdate(<%=reviewList.get(i).getBoardSeq() %>)"><small>수정</small></th>
+									<th class="col-1 text-sm-right" id="deBtn<%=reviewList.get(i).getBoardSeq() %>" onClick="reviewDelete(<%=reviewList.get(i).getBoardSeq() %>)"><small>삭제</small></th>
+									<th class="col-1 text-sm-right" id="reBtn<%=reviewList.get(i).getBoardSeq() %>" onClick="reviewSubmit(<%=reviewList.get(i).getBoardSeq() %>)" style="display: none"><small>등록</small></th>
+									<th class="col-1 text-sm-right" id="cnBtn<%=reviewList.get(i).getBoardSeq() %>" onClick="reviewCancel(<%=reviewList.get(i).getBoardSeq() %>)" style="display: none"><small>취소</small></th>
+									<%
+// 									}
+									%>
 								</tr>
 								<tr class="d-flex text-left">
-									<th class="col-12">마시 조씁미다</th>
+									<th class="col-12" id="reviewDiv<%=reviewList.get(i).getBoardSeq() %>" ><%=reviewList.get(i).getBoardContent() %></th>
 								</tr>
 							</tbody>
-							<tbody>
-								<tr class="d-flex text-left">
-									<th class="col-3"><small>소호차이나</small></th>
-									<th class="col-7"><small>2021-04-24</small></th>
-									<th class="col-1 text-sm-right"><small>수정</small></th>
-									<th class="col-1 text-sm-right"><small>삭제</small></th>
-								</tr>
-								<tr class="d-flex text-left">
-									<th class="col-12">장사가 느므 잘되믄 우리집은 으쩌나?</th>
-								</tr>
-							</tbody>
-							<tbody>
-								<tr class="d-flex text-left">
-									<th class="col-3"><small>403호 강아지</small></th>
-									<th class="col-7"><small>2021-04-24</small></th>
-									<th class="col-1 text-sm-right"><small>수정</small></th>
-									<th class="col-1 text-sm-right"><small>삭제</small></th>
-								</tr>
-								<tr class="d-flex text-left">
-									<th class="col-12">양이 마는거 가타요</th>
-								</tr>
-							</tbody>
+								<%
+							}
+						}
+						%>
 						</table>
+						
 					</div>
+					<form id="fmReview" method="post" enctype="multipart/form-data">
+						<input type="hidden" id="boardSeq" name="boardSeq">
+						<input type="hidden" id="restCode" name="restCode" value="<%=rv.getRestCode() %>">
+						<input type="hidden" name="userId" value="<%=userId %>">
+						<input type="hidden" id="boardTitle" name="boardTitle">
+						<input type="hidden" id="boardContent" name="boardContent">
+						<input type="hidden" id="restScore" name="restScore">
+						<input type="hidden" name="atchFileId" value="-1">
+						<input type="hidden" name="atchBillId" value="-1">
+						<input type="hidden" id="tmpContent">
+						<input type="hidden" id="tmpScore">
+					</form>
+					<script type="text/javascript">
+					function reviewUpdate(seq){
+						$('#upBtn' + seq).hide();
+						$('#deBtn' + seq).hide();
+						$('#reBtn' + seq).show();
+						$('#cnBtn' + seq).show();
+						
+						var text = $('#reviewDiv' + seq).html();
+						var score = $('#score').html();
+						$('#reviewDiv' + seq).html('<input type="text" id="newContent" value="' + text + '">');
+						$('#score').html('<input type="text" class="col-10" id="newScore" value="' + score + '">');
+						$('#tmpContent').val(text);
+						$('#tmpScore').val(score);
+					}
+					function reviewDelete(seq){
+						if(confirm("리뷰를 삭제하시겠습니까?")){
+							$('#fmReview').attr("action","<%=request.getContextPath() %>/searchRest/deleteReview.do")
+							$('#boardSeq').val(seq)
+							$('#fmReview').submit();
+						}
+					}
+					function reviewSubmit(seq){
+						if(confirm("리뷰를 수정하시겠습니까?")){
+							$('#fmReview').attr("action","<%=request.getContextPath() %>/searchRest/updateReview.do")
+							$('#boardSeq').val() = seq;
+							$('#boardTitle').val() = $('#rboardTitle' + seq).val();
+							$('#boardContent').val() = $('#reviewDiv' + seq).val();
+							$('#boardScore').val() = $('#score' + seq).val();
+							$('#fmReview').submit();
+						}
+						
+					}
+					function reviewCancel(seq){
+						$('#upBtn' + seq).show();
+						$('#deBtn' + seq).show();
+						$('#reBtn' + seq).hide();
+						$('#cnBtn' + seq).hide();
+						$('#reviewDiv' + seq).show();
+						$('#reviewUpdate' + seq).hide();
+						
+						$('#reviewDiv' + seq).html($('#tmpContent').val());
+						$('#score').html($('#tmpScore').val());
+					}
+					</script>
+					
+					<!-- Pagination -->
+					<ul class="pagination justify-content-center mb-4">
+						<li class="page-item"><a class="page-link" href="#">&larr;
+								Older</a></li>
+						<li class="page-item disabled"><a class="page-link" href="#">Newer
+								&rarr;</a></li>
+					</ul>
 				</div>
-				<!-- Pagination -->
-				<ul class="pagination justify-content-center mb-4">
-					<li class="page-item"><a class="page-link" href="#">&larr;
-							Older</a></li>
-					<li class="page-item disabled"><a class="page-link" href="#">Newer
-							&rarr;</a></li>
-				</ul>
 
 			</div>
-
-
 		</div>
+		<form id="fmfav" method="post">
+			<input type="hidden" name="userId" id="userId" value="<%=userId%>">
+			<input type="hidden" name="restCode" id="restCode" value="<%=rv.getRestCode() %>">
+		</form>
 	</div>
+	<script type="text/javascript">
+		function fnFav() {
+			if("dipsY" == ($("#favbtn").attr("alt"))){
+				$("#favbtn").attr("src", "<%=request.getContextPath()%>/assets/img/restau/eheart.png");
+				$("#fm").attr("action", "<%=request.getContextPath()%>/searchRest/insertDips.do");
+				$("#favbtn").attr("alt","dipsN");
+				$("#dipscnt").val() - 1;
+				$("#fm").submit();
+				
+			} else if("dipsN" == ($("#favbtn").attr("alt"))){
+				$("#favbtn").attr("src","<%=request.getContextPath()%>/assets/img/restau/heart.png");
+				$("#fm").attr("action", "<%=request.getContextPath()%>/searchRest/deleteDips.do");
+				$("#favbtn").attr("alt","dipsY");
+				$("#dipscnt").val() + 1;
+				$("#fm").submit();
+			}
+			
+		}
+	</script>
 	<!-- /.container -->
 	
 <%@include file="/WEB-INF/view/common/mainFooter.jsp"%>

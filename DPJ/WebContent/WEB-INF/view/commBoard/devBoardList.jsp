@@ -7,6 +7,8 @@
 <%@include file="/WEB-INF/view/common/mainNav.jsp"%>
 <%
 	List<CommBoardVO> boardList = (List<CommBoardVO>) request.getAttribute("boardList");
+
+	PagingVO pagingVO = (PagingVO)request.getAttribute("pagingVO");
 %>
 
 	<!-- Page Content -->
@@ -23,8 +25,7 @@
 				<div class="card mb-4">
 
 					<div class="card-body">
-						<h2 class="card-title">게시판 목록</h2>
-						<p class="card-text">온통 너의 생각 뿐야~</p>
+						<p class="card-text">개발 관련된 내용만 올려주세요!</p>
 						<table class="table" >
 							<tbody>
 								<tr class="d-flex col-12">
@@ -45,7 +46,7 @@
 		%>
 
 								<tr class="d-flex col-12">
-									<td class="col-2"><a href="select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
+									<td class="col-2"><a href="<%=request.getContextPath() %>/commBoard/select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
 									<td class="col-5"><%=boardList.get(i).getBoardTitle() %></td>
 									<td class="col-2"><%=boardList.get(i).getUserId() %></td>
 									<td class="col-2"><%=boardList.get(i).getBoardDate() %></td>
@@ -62,21 +63,35 @@
 								<%
 				}
 		%>
+		<!-- 페이징 처리 시작 -->
+		<%if(pagingVO.getTotalCount() > 0) {%>
+			<tr>
+				<td colspan="4" align="center">
+					<%if(pagingVO.getFirstPageNo() > pagingVO.getPageSize()) { %>
+					<a href="list.do?pageNo=<%=pagingVO.getFirstPageNo() - pagingVO.getPageSize() %>">[이전]</a>
+					<%} %>
+					<%for(int pNo = pagingVO.getFirstPageNo(); pNo <= pagingVO.getLastPageNo(); pNo++) { %>
+						<a <%if(pNo == pagingVO.getCurrentPageNo()){ %> style="color:orange;"<%} %> href="list.do?pageNo=<%=pNo %>">[<%=pNo %>]</a>
+					<%} %>
+					<%if(pagingVO.getLastPageNo() < pagingVO.getTotalPageCount()) {%>
+					<a href="list.do?pageNo=<%=pagingVO.getFirstPageNo() + pagingVO.getPageSize() %>">[다음]</a>
+					<%} %>
+				</td>
+			</tr>
+		<%} %>
+		<!-- 페이징 처리 끝 -->	
 							</tbody>
 						</table>
+				<% if(userId ==null){}
+					else if(userType.equals("일반회원") || userType.equals("관리자")){
+					%>
+					<div class="d-flex justify-content-center mb-4">
+						<div class="btn-info"><a class="btn btn-lg" href="<%=request.getContextPath() %>/commBoard/insert.do?code=개발">게시글 등록</a></div>
 					</div>
-					<div class="card-footer d-flex justify-content-end">
-						<a class="btn btn-lg btn-secondary" type="submit" href="insert.do">게시글 작성하기</a>
-						&nbsp;&nbsp;
+					<% }
+					else{}%>
 					</div>
 				</div>
-				<!-- Pagination -->
-				<ul class="pagination justify-content-center mb-4">
-					<li class="page-item"><a class="page-link" href="#">&larr;
-							Older</a></li>
-					<li class="page-item disabled"><a class="page-link" href="#">Newer
-							&rarr;</a></li>
-				</ul>
 
 			</div>
 		</div>

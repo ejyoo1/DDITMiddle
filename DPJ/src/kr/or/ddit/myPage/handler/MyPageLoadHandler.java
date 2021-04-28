@@ -1,4 +1,4 @@
-package kr.or.ddit.myPage.handler;
+package kr.or.ddit.mypage.handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

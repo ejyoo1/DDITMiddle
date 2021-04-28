@@ -36,7 +36,7 @@ public class GetAllDevBoardHandler implements CommandHandler{
 		pagingVO.setCountPerPage(5);
 		pagingVO.setPageSize(5);
 		
-		List<CommBoardVO> boardList = boardService.getAllBoardList(pagingVO);
+		List<CommBoardVO> boardList = boardService.getAllDevBoardList(pagingVO);
 		
 		req.setAttribute("boardList", boardList);
 		req.setAttribute("pagingVO", pagingVO);

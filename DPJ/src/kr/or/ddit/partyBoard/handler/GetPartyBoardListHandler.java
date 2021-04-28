@@ -9,6 +9,9 @@ import kr.or.ddit.common.handler.CommandHandler;
 import kr.or.ddit.partyBoard.service.IPartyBoardService;
 import kr.or.ddit.partyBoard.service.PartyBoardServiceImpl;
 import kr.or.ddit.partyBoard.vo.PartyBoardVO;
+import kr.or.ddit.partyJoin.service.IPartyJoinService;
+import kr.or.ddit.partyJoin.service.PartyJoinServiceImpl;
+import kr.or.ddit.partyJoin.vo.PartyJoinVO;
 
 public class GetPartyBoardListHandler implements CommandHandler {
 	
@@ -22,9 +25,12 @@ public class GetPartyBoardListHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
+
 		IPartyBoardService service = PartyBoardServiceImpl.getInstance();
 		List<PartyBoardVO> list = service.getPartyBoardList();
 		req.setAttribute("list", list);
+		
+		
 		
 		return VIEW_PAGE;
 	}

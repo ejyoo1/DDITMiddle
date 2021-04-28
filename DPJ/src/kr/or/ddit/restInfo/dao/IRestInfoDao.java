@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.restInfo.vo.RestFavVO;
 import kr.or.ddit.restInfo.vo.RestInfoVO;
 
 /**
@@ -47,4 +49,42 @@ public interface IRestInfoDao {
 	 * @throws SQLException
 	 */
 	public RestInfoVO getRest(SqlMapClient smc, String restCode) throws SQLException;
+	
+	/*************************************************************************************************************/
+	
+	/**
+	 * restcode를 이용해 찜한 회원수를 count(int)로 가져오는 메서드
+	 * @param smc
+	 * @param restCode
+	 * @return 검색결과 : count(int)
+	 * @throws SQLException
+	 */
+	public int getUserAboutRest(SqlMapClient smc, String restCode) throws SQLException;
+	
+	/**
+	 * userId를 이용해 해당 유저가 찜한 식당의 코드를 가져오는 메서드
+	 * @param smc
+	 * @param userId
+	 * @return 검색결과 : List<RestFavVO>
+	 * @throws SQLException
+	 */
+	public List<RestFavVO> getRestAboutUser(SqlMapClient smc, String userId) throws SQLException;
+	
+	/**
+	 * 찜한 정보(userId와 restCode)를 db에 저장하는 메서드
+	 * @param smc
+	 * @param rfv
+	 * @return 작업 성공 : 1, 작업 실패 : 0
+	 * @throws SQLException
+	 */
+	public int insertDips(SqlMapClient smc, RestFavVO rfv) throws SQLException;
+	
+	/**
+	 * 찜한 정보(userId와 restCode)를 db에서 삭제하는 메서드
+	 * @param smc
+	 * @param rfv
+	 * @return 작업 성공 : 1, 작업 실패 : 0
+	 * @throws SQLException
+	 */
+	public int deleteDips(SqlMapClient smc, RestFavVO rfv) throws SQLException;
 }

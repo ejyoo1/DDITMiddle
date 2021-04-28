@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.common.vo.PagingVO"%>
 <%@page import="kr.or.ddit.commBoard.vo.CommBoardVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,8 @@
 
 <%
 	List<CommBoardVO> boardList = (List<CommBoardVO>) request.getAttribute("boardList");
+
+	PagingVO pagingVO = (PagingVO)request.getAttribute("pagingVO");
 %>
     
 <%@include file="/WEB-INF/view/common/mainNav.jsp"%>
@@ -27,15 +30,14 @@
 					<p class="card-text">굿끼제먹 공식 BGM 브레이브걸스 - rollin</p>
 				</div>
 				<div class="card-footer text-muted">
-					<table class="table">
+					<table class="table col-12">
 						<tbody>
-							<tr>
-								<td>게시글번호</td>
-								<td>분류</td>
-								<td>제목</td>
-								<td>작성자</td>
-								<td>작성일</td>
-								<td>조회수</td>
+							<tr class="d-flex justify-content-start">
+								<td class="col-2">#</td>
+								<td class="col-2">분류</td>
+								<td class="col-4">제목</td>
+								<td class="col-2">작성자</td>
+								<td class="col-2">조회수</td>
 							</tr>
 							<%
 								int boardSize = boardList.size();
@@ -47,13 +49,12 @@
 										}
 							%>
 
-							<tr>
-								<td><a href="select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
-								<td><%=boardList.get(i).getCode() %></td>
-								<td><%=boardList.get(i).getBoardTitle() %></td>
-								<td><%=boardList.get(i).getUserId() %></td>
-								<td><%=boardList.get(i).getBoardDate() %></td>
-								<td><%=boardList.get(i).getBoardHitsNumber() %></td>
+							<tr class="d-flex justify-content-start">
+								<td class="col-2"><a href="select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
+								<td class="col-2"><%=boardList.get(i).getCode() %></td>
+								<td class="col-4"><%=boardList.get(i).getBoardTitle() %></td>
+								<td class="col-2"><%=boardList.get(i).getUserId() %></td>
+								<td class="col-2"><%=boardList.get(i).getBoardHitsNumber() %></td>
 							</tr>
 							<%
 									}
@@ -61,11 +62,28 @@
 		
 							%>
 							<tr>
-								<td colspan="8">게시판 정보가 없습니다.</td>
+								<td colspan="12">게시판 정보가 없습니다.</td>
 							</tr>
 							<%
 							}
 							%>
+								<!-- 페이징 처리 시작 -->
+		<%if(pagingVO.getTotalCount() > 0) {%>
+			<tr>
+				<td colspan="4" align="center">
+					<%if(pagingVO.getFirstPageNo() > pagingVO.getPageSize()) { %>
+					<a href="main.do?pageNo=<%=pagingVO.getFirstPageNo() - pagingVO.getPageSize() %>">[이전]</a>
+					<%} %>
+					<%for(int pNo = pagingVO.getFirstPageNo(); pNo <= pagingVO.getLastPageNo(); pNo++) { %>
+						<a <%if(pNo == pagingVO.getCurrentPageNo()){ %> style="color:orange;"<%} %> href="main.do?pageNo=<%=pNo %>">[<%=pNo %>]</a>
+					<%} %>
+					<%if(pagingVO.getLastPageNo() < pagingVO.getTotalPageCount()) {%>
+					<a href="main.do?pageNo=<%=pagingVO.getFirstPageNo() + pagingVO.getPageSize() %>">[다음]</a>
+					<%} %>
+				</td>
+			</tr>
+		<%} %>
+		<!-- 페이징 처리 끝 -->	
 						</tbody>
 					</table>
 					<% if(userId ==null){}
@@ -83,40 +101,31 @@
 
 		<!-- Sidebar Widgets Column -->
 		<div class="col-md-4">
-
-			<!-- Search Widget -->
-			<div class="card my-4">
-				<h5 class="card-header">Search</h5>
-				<div class="card-body">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="구현중입니다. 2일만 더주세요.">
-						<span class="input-group-append">
-							<button class="btn btn-secondary" type="button">Go!</button>
-						</span>
-					</div>
-				</div>
-			</div>
-
+			<img class = "col-md-12" src="/DPJ/assets/img/about/9.png">
 			<!-- Categories Widget -->
 			<div class="card my-4">
-				<h5 class="card-header">Categories</h5>
+				<h5 class="card-header">게시판 카테고리</h5>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-6">
 							<ul class="list-unstyled mb-0">
-								<li><span class="text-info">커뮤니티 게시판</span></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/commBoard/main.do">커뮤니티 통합</a></li>
 								<li><a class="text-info" href="<%=request.getContextPath() %>/devBoard/list.do">개발 커뮤니티</a></li>
-								<li><a class="text-info" href="#">취업 커뮤니티</a></li>
-								<li><a class="text-info" href="#">잡담 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/jobBoard/list.do">취업 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/socialBoard/list.do">잡담 커뮤니티</a></li>
 							</ul>
 						</div>
 						<div class="col-lg-6">
 							<ul class="list-unstyled mb-0">
-								<li><span class="text-info">반별 커뮤니티</span></li>
-								<li><a class="text-info" href="#">401호</a></li>
-								<li><a class="text-info" href="#">402호</a></li>
-								<li><a class="text-info" href="#">403호</a></li>
-								<li><a class="text-info" href="#">404호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/classBoard/main.do">클래스 통합</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/401Board/list.do">401호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/402Board/list.do">402호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/403Board/list.do">403호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/404Board/list.do">404호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/405Board/list.do">405호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/406Board/list.do">406호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/407Board/list.do">407호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/408Board/list.do">408호</a></li>
 							</ul>
 						</div>
 					</div>

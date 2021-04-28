@@ -1,4 +1,4 @@
-package kr.or.ddit.restInfo.service;
+ package kr.or.ddit.restInfo.service;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,6 +9,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 import kr.or.ddit.restInfo.dao.IRestInfoDao;
 import kr.or.ddit.restInfo.dao.RestInfoDaoImpl;
+import kr.or.ddit.restInfo.vo.RestFavVO;
 import kr.or.ddit.restInfo.vo.RestInfoVO;
 import kr.or.ddit.util.SqlMapClientUtil;
 
@@ -74,6 +75,50 @@ public class RestInfoServiceImpl implements IRestInfoService {
 		
 		
 		return rv;
+	}
+
+	@Override
+	public int getUserAboutRest(String restCode) {
+		int result = 0;
+		try {
+			result = restInfoDao.getUserAboutRest(smc, restCode);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<RestFavVO> getRestAboutUser(String userId) {
+		List<RestFavVO> favList = null;
+		try {
+			favList = restInfoDao.getRestAboutUser(smc, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return favList;
+	}
+
+	@Override
+	public int insertDips(RestFavVO rfv) {
+		int res = 0;
+		try {
+			res = restInfoDao.insertDips(smc, rfv);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}
+		return res;
+	}
+
+	@Override
+	public int deleteDips(RestFavVO rfv) {
+		int res = 0;
+		try {
+			res = restInfoDao.deleteDips(smc, rfv);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 }

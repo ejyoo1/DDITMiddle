@@ -128,3 +128,4 @@
 
 	<!-- Footer -->
 	<%@include file="/WEB-INF/view/common/mainFooter.jsp" %>
+</html>

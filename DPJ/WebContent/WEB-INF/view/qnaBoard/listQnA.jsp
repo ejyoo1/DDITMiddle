@@ -63,7 +63,7 @@
 								%>
 								<tr class="d-flex text-center">
 									<td class="col-2"><%=qnaList.get(i).getBoardSeq() %></td>
-									<td class="col-5" onclick="fnGet(<%=qnaList.get(i).getBoardSeq() %>)"><%=qnaList.get(i).getBoardTitle() %></td>
+									<td class="col-5"><a href="select.do?boardSeq=<%=qnaList.get(i).getBoardSeq() %>"><%=qnaList.get(i).getBoardTitle() %></a></td>
 									<td class="col-2"><%=qnaList.get(i).getUserId() %></td>
 									<td class="col-2"><%=(qnaList.get(i).getBoardDate()).substring(0,10) %></td>
 									<td class="col-1"><%=qnaList.get(i).getBoardHits() %></td>
@@ -75,10 +75,16 @@
 							</tbody>
 						</table>
 					</div>
+					<%
+					if(userId != null){
+						%>
 					<div class="card-footer d-flex justify-content-end">
 						<a class="btn btn-lg btn-secondary" type="submit" href="<%=request.getContextPath() %>/qnaBoard/insert.do">게시글 작성하기</a>
 						&nbsp;&nbsp;
 					</div>
+						<%
+					}
+					%>
 				</div>
 				<!-- Pagination -->
 				<ul class="pagination justify-content-center mb-4">

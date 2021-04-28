@@ -9,6 +9,7 @@
 			CODE
 			, BOARD_SEQ
 			, USER_ID
+			, USER_PROFILE
 			, BOARD_TITLE
 			, BOARD_DATE
 			, BOARD_CONTENT
@@ -25,41 +26,34 @@
 			, REST_TYPE
 			  </isNotEmpty>
 			, PARTY_YN
-			, PARTY_START
 			, PARTY_END
-			  <isNotEmpty property="atchFileId">
-			, ATCH_FILE_ID
-			  </isNotEmpty>
 			, BOARD_HIT
 			, BOARD_DELETE
 		)
 		VALUES (
-			code
+			#code#
 			, SEQ_PARTY_BOARD.NEXTVAL
-			, userId
-			, boardTitle
-			, boardDate
-			, boardContent
+			, #userId#
+			, #userProfile#
+			, #boardTitle#
+			, SYSDATE
+			, #boardContent#
 			  <isNotEmpty property="restCode">
-			, restCode
+			, #restCode#
 			  </isNotEmpty>
 			  <isNotEmpty property="price">
-			, price
+			, #price#
 			  </isNotEmpty>
 			  <isNotEmpty property="distance">
-			, distance
+			, #distance#
 			  </isNotEmpty>
-			  <isNotEmpty property="distance">
-			, restType
+			  <isNotEmpty property="restType">
+			, #restType#
 			  </isNotEmpty>
-			, partyYn
-			, SYSDATE
-			, partyEnd
-			  <isNotEmpty property="atchFileId">
-			, atchFileId
-			  </isNotEmpty>
-			, boardHit
-			, boardDelete
+			, #partyYn#
+			, #partyEnd#
+			, #boardHit#
+			, #boardDelete#
 		)
 	</insert>
 	
@@ -80,9 +74,6 @@
 			   , REST_TYPE = #restType#
 			     </isNotEmpty>
 			   , PARTY_END = #partyEnd#
-			     <isNotEmpty property="atchFileId">
-			   , ATCH_FILE_ID = #atchFileId#
-			     </isNotEmpty>
 		WHERE  USER_ID = #userId#
 		AND    BOARD_SEQ = #boardSeq#
 	</update>
@@ -105,17 +96,16 @@
 		CODE                								code
 		,BOARD_SEQ          								boardSeq
 		,USER_ID            								userId
+		,USER_PROFILE										userProfile
 		,BOARD_TITLE        								boardTitle
-		,TO_CHAR(BOARD_DATE, 'MM/DD')         		boardDate
+		,TO_CHAR(BOARD_DATE, 'MM/DD')         				boardDate
 		,BOARD_CONTENT      								boardContent
 		,REST_CODE          								restCode
 		,PRICE              								price
 		,DISTANCE           								distance
 		,REST_TYPE											restType
 		,PARTY_YN           								partyYn
-		,TO_CHAR(PARTY_START, 'MM/DD')				partyStart
-		,TO_CHAR(PARTY_END, 'MM/DD')  				partyEnd
-		,ATCH_FILE_ID       								atchFileId
+		,TO_CHAR(PARTY_END, 'MM/DD')  						partyEnd
 		,BOARD_HIT          								boardHit
 		,BOARD_DELETE       								boardDelete
 		FROM   TB_PARTY_BOARD
@@ -125,25 +115,26 @@
 	
 	<select id="getPartyBoardList" parameterClass="kr.or.ddit.partyBoard.vo.PartyBoardVO" resultClass="kr.or.ddit.partyBoard.vo.PartyBoardVO">
 		SELECT 
-		CODE                								code
-		,BOARD_SEQ          								boardSeq
-		,USER_ID            								userId
-		,BOARD_TITLE        								boardTitle
-		,TO_CHAR(BOARD_DATE, 'MM/DD')         		boardDate
-		,BOARD_CONTENT      								boardContent
-		,REST_CODE          								restCode
-		,PRICE              								price
-		,DISTANCE           								distance
-		,REST_TYPE											restType
-		,PARTY_YN           								partyYn
-		,TO_CHAR(PARTY_START, 'MM/DD')        		partyStart
-		,TO_CHAR(PARTY_END, 'MM/DD')          		partyEnd
-		,ATCH_FILE_ID       								atchFileId
-		,BOARD_HIT          								boardHit
-		,BOARD_DELETE       								boardDelete
-		FROM   TB_PARTY_BOARD
+		A.CODE                								code
+		,A.BOARD_SEQ          								boardSeq
+		,A.USER_ID            								userId
+		,A.USER_PROFILE										userProfile
+		,A.BOARD_TITLE        								boardTitle
+		,TO_CHAR(A.BOARD_DATE, 'MM/DD')         			boardDate
+		,A.BOARD_CONTENT      								boardContent
+		,A.REST_CODE          								restCode
+		,A.PRICE              								price
+		,A.DISTANCE           								distance
+		,A.REST_TYPE										restType
+		,A.PARTY_YN           								partyYn
+		,TO_CHAR(A.PARTY_END, 'MM/DD')          			partyEnd
+		,A.BOARD_HIT          								boardHit
+		,A.BOARD_DELETE       								boardDelete
+		,(SELECT COUNT(*) FROM TB_PARTY_JOIN WHERE BOARD_SEQ = A.BOARD_SEQ) countList
+		FROM   TB_PARTY_BOARD A
 		WHERE  1 = 1
 		AND    BOARD_DELETE = 'N'
+		ORDER BY PARTY_YN ASC, BOARD_SEQ DESC
 	</select>
 	
 	<select id="getPartyBoardAllList" parameterClass="kr.or.ddit.partyBoard.vo.PartyBoardVO" resultClass="kr.or.ddit.partyBoard.vo.PartyBoardVO">

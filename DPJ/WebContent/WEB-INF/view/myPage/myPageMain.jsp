@@ -92,7 +92,7 @@
 	          		</tr>
 	          		<tr class="d-flex text-center col-12">
 	          			<td class="p-2 col-12">
-	          			<a class="btn btn-lg btn-info" href="<%=request.getContextPath() %>/myPage/myPageEdit.do">회원정보 수정하기</a>	 
+	          			<a class="btn btn-lg btn-info" href="<%=request.getContextPath() %>/mypage/myPageEdit.do">회원정보 수정하기</a>	 
 <%-- 	          			<a class="btn btn-lg btn-info" href="<%=request.getContextPath() %>/searchRest/list.do">회원정보 수정하기</a>	  --%>
 	          			</td>
 	          		</tr>
@@ -114,7 +114,7 @@
 	          <h5 class="card-header">Categories</h5>
 	          <div class="card-body">
 	            <div class="row">
-	              <div class="col-lg-6">
+	              <div class="col-lg-12">
 	                <ul class="list-unstyled mb-0">
 	                  <li>
 	                    <a class="text-info" href="#">내가 찜한 식당</a>
@@ -123,13 +123,16 @@
 	                    <a class="text-info" href="#">내가 모집한 Meal파티</a>
 	                  </li>
 	                  <li>
-	                    <a class="text-info" href="#">내가 쓴 게시글 보기</a>
+	                    <a class="text-info" href="<%=request.getContextPath() %>/mypage/myPageBoard.do">내가 쓴 문의 목록</a>
 	                  </li>
 	                  <li>
-	                    <a class="text-info" href="#">내가 쓴 리뷰 보기</a>
+	                    <a class="text-info" href="#">내가 쓴 커뮤니티 게시글 목록</a>
 	                  </li>
 	                  <li>
-	                    <a class="text-info" href="#">내가 쓴 댓글 보기</a>
+	                    <a class="text-info" href="<%=request.getContextPath() %>/mypage/myPageReview.do">내가 쓴 리뷰 보기</a>
+	                  </li>
+	                  <li>
+	                    <a class="text-info" href="<%=request.getContextPath() %>/mypage/myPageComment.do">내가 쓴 댓글 보기</a>
 	                  </li>
 	                  
 	                </ul>

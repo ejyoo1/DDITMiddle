@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import kr.or.ddit.restInfo.vo.RestFavVO;
 import kr.or.ddit.restInfo.vo.RestInfoVO;
 
 public class RestInfoDaoImpl implements IRestInfoDao{
@@ -50,5 +51,32 @@ public class RestInfoDaoImpl implements IRestInfoDao{
 	public RestInfoVO getRest(SqlMapClient smc, String restCode) throws SQLException {
 		RestInfoVO rv = (RestInfoVO)smc.queryForObject("restinfo.getRest", restCode);
 		return rv;
+	}
+	
+/**********************************************************************************************************/
+	
+	@Override
+	public int getUserAboutRest(SqlMapClient smc, String restCode) throws SQLException {
+		int res = (int)smc.queryForObject("restFav.getUserAboutRest", restCode);
+//		int cnt = (int)smc.queryForObject("restFav.updateDips", restCode);
+		return res;
+	}
+
+	@Override
+	public List<RestFavVO> getRestAboutUser(SqlMapClient smc, String userId) throws SQLException {
+		List<RestFavVO> favList = smc.queryForList("restFav.getRestAboutUser", userId);
+		return favList;
+	}
+
+	@Override
+	public int insertDips(SqlMapClient smc, RestFavVO rfv) throws SQLException {
+		int cnt = (int)smc.queryForObject("restFav.insertDips", rfv);
+		return cnt;
+	}
+
+	@Override
+	public int deleteDips(SqlMapClient smc, RestFavVO rfv) throws SQLException {
+		int cnt = (int)smc.queryForObject("restFav.deleteDips", rfv);
+		return cnt;
 	}
 }

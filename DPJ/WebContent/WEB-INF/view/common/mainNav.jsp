@@ -68,7 +68,7 @@
 			font-family: 'Jua', sans-serif;       	
 		}
      	
-		h2, li, a, th, td {
+		h2, li, a, th, td, button{
 			font-family: 'Jua', sans-serif;
 			font-size: 1.2em;
 		}
@@ -77,8 +77,11 @@
 			font-family: 'Sunflower', sans-serif;
 			font-size: 1.2em;
 		}
-		tr, td{
+		tg{
 			text-align: center;
+		}
+		tr, td{
+			text-align: left;
 		}
 	</style>
 </head>
@@ -97,13 +100,13 @@
 				<ul class="navbar-nav ml-auto col-lg-7-h1">
 					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/eventBoard/list.do"">이벤트</a></li>
 					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/searchRest/list.do">식당검색</a></li>
-					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/partyBoard/main.do">Meal파티</a></li>
+					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/PARTY/main.do">Meal파티</a></li>
 					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/commBoard/main.do">커뮤니티</a></li>
 					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/adminBoardMain/noticeGetAll.do">고객센터</a></li>
 					<%
-						if("일반회원".equals(userId) || "식당회원".equals(userId)){
+						if("일반회원".equals(userType) || "식당회원".equals(userType)){
 					%>
-						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/myPage/main.do">마이페이지 </a></li>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/mypage/main.do">마이페이지 </a></li>
 					<%
 						}
 					%>

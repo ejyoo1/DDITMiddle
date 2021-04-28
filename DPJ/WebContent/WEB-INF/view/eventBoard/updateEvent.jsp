@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/view/common/mainNav.jsp"%>
 
 	<!-- Page Content -->
-<form method="post" action="insert.do" enctype="multipart form-data">
+<form method="post" action="insert.do" enctype="multipart/form-data">
 <input  type="hidden" value="<%=userId %>" name="userId">
 	<div class="container">
 		<div class="row">

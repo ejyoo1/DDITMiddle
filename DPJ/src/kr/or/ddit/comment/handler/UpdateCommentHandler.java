@@ -21,10 +21,10 @@ public class UpdateCommentHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		if(req.getMethod().equals("GET")) { // GET 방식인 경우 redirect를 하지 않는다.
+		if(req.getMethod().equals("GET")) {
 			return null;
 
-		}else { 
+		} else { 
 			long boardSeq = Long.parseLong(req.getParameter("boardSeq"));
 			String code = req.getParameter("code");
 			

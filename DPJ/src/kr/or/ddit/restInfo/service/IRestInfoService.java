@@ -1,7 +1,11 @@
 package kr.or.ddit.restInfo.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.restInfo.vo.RestFavVO;
 import kr.or.ddit.restInfo.vo.RestInfoVO;
 
 /**
@@ -37,5 +41,35 @@ public interface IRestInfoService {
 	 * @return
 	 */
 	public RestInfoVO getRest(String restCode);
+	
+/*************************************************************************************************************/
+	
+	/**
+	 * restcode를 이용해 찜한 회원수를 count(int)로 가져오는 메서드
+	 * @param restCode
+	 * @return 검색결과 : count(int)
+	 */
+	public int getUserAboutRest(String restCode);
+	
+	/**
+	 * userId를 이용해 해당 유저가 찜한 식당의 코드를 가져오는 메서드
+	 * @param userId
+	 * @return 검색결과 : List<RestFavVO>
+	 */
+	public List<RestFavVO> getRestAboutUser(String userId);
+	
+	/**
+	 * 찜한 정보(userId와 restCode)를 db에 저장하는 메서드
+	 * @param rfv
+	 * @return 작업 성공 : 1, 작업 실패 : 0
+	 */
+	public int insertDips(RestFavVO rfv);
+	
+	/**
+	 * 찜한 정보(userId와 restCode)를 db에서 삭제하는 메서드
+	 * @param rfv
+	 * @return 작업 성공 : 1, 작업 실패 : 0
+	 */
+	public int deleteDips(RestFavVO rfv);
 	
 }

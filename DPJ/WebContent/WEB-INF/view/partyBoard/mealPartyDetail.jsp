@@ -10,17 +10,28 @@
 	PartyBoardVO pv = (PartyBoardVO) request.getAttribute("partyVO");
 	
 	int countJoin = (Integer) request.getAttribute("countJoin");
-	System.out.println(countJoin);
 	List<PartyJoinVO> joinList = (List<PartyJoinVO>) request.getAttribute("joinList");
 	
 	int commentCount = (Integer) request.getAttribute("commentCnt");
 	List<CommentVO> commentList = (List<CommentVO>) request.getAttribute("commentList");
 	if(commentList == null) commentList = new ArrayList<CommentVO>();
 	
+	String uSrc = "";
+	if(pv.getUserProfile().equals("A")) {
+		uSrc = "/assets/img/profile/A.png";
+	} else if(pv.getUserProfile().equals("B")) {
+		uSrc = "/assets/img/profile/B.png";
+	} else if(pv.getUserProfile().equals("C")) {
+		uSrc = "/assets/img/profile/C.png";
+	} else if(pv.getUserProfile().equals("D")) {
+		uSrc = "/assets/img/profile/D.png";
+	} else if(pv.getUserProfile().equals("E")) {
+		uSrc = "/assets/img/profile/E.png";
+	} else if(pv.getUserProfile().equals("F")) {
+		uSrc = "/assets/img/profile/F.png";
+	}
+	
 %>    
-    
-    
-    
     
 <%@include file="/WEB-INF/view/common/mainNav.jsp"%>
 
@@ -32,14 +43,12 @@
 				<h3 >모집중인 Meal 파티입니다.</h3>
 			</div>
 			
-			
-	
 			<div class="card mb-4">
 				<div class="card-body">
 					<table class="table" >
 						<tbody>
 							<tr class="d-flex text-left">
-								<th class="col-6" name="boardTitle"><%=pv.getBoardTitle() %></th>
+								<th class="col-6" name="boardTitle">제목 : <%=pv.getBoardTitle() %></th>
 								<td class="col-1"><small>작성자</small></td>
 								<td class="col-1" name="userId"><small><%=pv.getUserId()%></small></td>
 								<td class="col-1"><small>작성일</small></td>
@@ -66,14 +75,12 @@
 					</table>
 					<hr class="mt-5">
 					<div class="row">
-<!-- 						<div class="col-lg-3"> -->
-<!-- 							<div class="team-member"> -->
-<!-- 								<img class="img-fluid img-thumbnail rounded-circle" src=""/> -->
-								
-<%-- 								<h4><%=pv.getUserId() %></h4> --%>
-<!-- 							</div> -->
-<!-- 						</div> -->
-						
+						<div class="col-lg-3">
+							<div class="team-member">
+								<img class="img-fluid img-thumbnail rounded-circle" src="<%=request.getContextPath()%><%=uSrc%>"/>
+								<h4><%=pv.getUserId() %></h4>
+							</div>
+						</div>
 					<%
 						String src = "";
 						for (int i = 0; i < joinList.size(); i++) {
@@ -102,10 +109,8 @@
 							} 
 						}
 					
-						int notJoin = 4 - joinList.size();
-							System.out.println("notJoin : " + notJoin);
+						int notJoin = 3 - joinList.size();
 						for (int j = 0; j < notJoin; j++) {
-							System.out.println(j);
 					%>
 						<div class="col-lg-3">
 							<div class="team-member">
@@ -124,7 +129,7 @@
 						if(userId.equals(pv.getUserId()) && pv.getPartyYn().equals("N")) {
 					%>
 							<div class="d-flex justify-content-center mb-5">
-								<a class="btn btn-lg btn-success">파티모집 마감하기</a>
+								<a class="btn btn-lg btn-success" onclick="fn_endParty()">파티모집 마감하기</a>
 							</div>
 					<%
 						} else if(pv.getPartyYn().equals("Y")) {
@@ -136,15 +141,32 @@
 						}
 					%>
 					
+					
 					<%
-						if(userType.equals("일반회원") && pv.getPartyYn().equals("N")) {
-					%>
-							<div class="d-flex justify-content-center mb-5">
-								<a class="btn btn-lg btn-success">파티 참가하기</a>
-							</div>
-					<%
+					boolean joinYn = false;
+					if(userType.equals("일반회원") && pv.getPartyYn().equals("N") && !pv.getUserId().equals(userId) && joinList.size() < 4) {
+						for(int k = 0; k < joinList.size(); k++) {
+							if(joinList.get(k).getUserId().equals(userId)) {
+								joinYn = true;
+								
+							} 
 						}
+						if(joinYn) {
+							%>			
+							<div class="d-flex justify-content-center mb-5">
+								<a class="btn btn-lg btn-danger" onclick="fn_quit()">파티 탈퇴하기</a>
+							</div>	
+							<%
+						} else if(!joinYn) {
+							%>
+							<div class="d-flex justify-content-center mb-5">
+								<a class="btn btn-lg btn-success" onclick="fn_join()">파티 참가하기</a>
+							</div>
+							<%	
+						}
+					}
 					%>
+					
 					
 					<div class="card-footer d-flex justify-content-center">
 						<a class="btn btn-lg btn-secondary" type="button" href="main.do">목록으로 돌아가기</a>
@@ -217,7 +239,14 @@
 	</div>
 </section>
 
-<!-- 들고나갈 값 -->
+<!-- 파티관련 기능에서 들고나갈 값 -->
+<form id="joinInfo" method="post">
+	<input type="hidden" name="boardSeq" value="<%=pv.getBoardSeq()%>">
+	<input type="hidden" name="userId" value=<%=userId%>>
+	<input type="hidden" name="userProfile" value=<%=userPhoto%>>
+</form>
+
+<!-- 댓글에서 들고나갈 값 -->
 <form id="fm" method="post">
 	<input type="hidden" name="code" value="DEV">
 	<input type="hidden" id="boardSeq" name="boardSeq" value="<%=pv.getBoardSeq()%>">
@@ -227,7 +256,30 @@
 	<input type="hidden" id="replySeq" name="replySeq">
 </form>	
 <script type="text/javascript">
+	// 파티관련 function
+	function fn_endParty() {
+		if(confirm("파티모집을 마감하시겠습니까?")) {
+			$('#fm').attr('action', '<%=request.getContextPath()%>/PARTY/endParty.do');
+			$('#fm').submit();
+		}
+		
+	}
 	
+	function fn_join() {
+		if(confirm("파티에 참가하시겠습니까?")) {
+			$('#joinInfo').attr('action', '<%=request.getContextPath()%>/PARTY/joinParty.do');
+			$('#joinInfo').submit();
+		}
+	}
+	
+	function fn_quit() {
+		if(confirm("파티에서 탈퇴하시겠습니까?")) {
+			$('#joinInfo').attr('action', '<%=request.getContextPath()%>/PARTY/quitParty.do');
+			$('#joinInfo').submit();
+		}
+	}
+	
+	// 댓글 부분 function
 	function fn_insert() {
 		$("#fm").attr("action", "<%=request.getContextPath()%>/comment/insert.do");
 		$("#replyContent").val($("#rContent").val());

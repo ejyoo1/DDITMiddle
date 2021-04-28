@@ -30,7 +30,8 @@ public class GetCommBoardHandler implements CommandHandler{
 		
 		// 게시글 번호 가져오기
 		Long boardSeq= Long.parseLong(req.getParameter("boardSeq"));
-		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(boardSeq);
 		// 서비스 호출
 		ICommBoardService boardService = CommBoardServiceImpl.getInstance();
 		ICommentService commentService = CommentServiceImpl.getInstance();

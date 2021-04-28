@@ -8,6 +8,7 @@
 <%
 
 List<PartyBoardVO> partyList = (List<PartyBoardVO>)request.getAttribute("list");  
+int countJoin = (Integer) request.getAttribute("countJoin");
 
 %>
 
@@ -42,31 +43,49 @@ List<PartyBoardVO> partyList = (List<PartyBoardVO>)request.getAttribute("list");
 						<table class="table col-12 ">
 							<tbody class="col-12">
 								<tr class="col-12 d-flex justify-content-start">
-									<th class="p-2 col-1">#</th>
-									<th class="p-2 col-4">제목</th>
-									<th class="p-2 col-2">작성자</th>
-									<th class="p-2 col-1">작성일</th>
-									<th class="p-2 col-2">파티마감</th>
+									<th class="p-1 col-1"></th>
+									<th class="p-2 col-1">인원</th>
+									<th class="p-2 col-2">파티마감일</th>
+									<th class="p-2 col-2">거리</th>
+									<th class="p-2 col-2">가격</th>
 									<th class="p-2 col-1">분류</th>
+									<th class="p-2 col-2">식당</th>
 									<th class="p-2 col-1"></th>
 								</tr>
 								
-															<%
+								
+							<%
 								int partySize = partyList.size();
 								if(partySize > 0) {
 									for(int i = 0; i < partySize; i++) {
-										if(partyList.get(i).getAtchFileId() > 0) {
-										}
+								System.out.println("모집중 : " + partyList.get(i).getCountList());
 							%>
 								
 								
 								<tr class="col-12 d-flex justify-content-start">
-									<td class="p-2 col-1"><%=i + 1 %></td>
-									<td class="p-2 col-4"><%=partyList.get(i).getBoardTitle() %></td>
-									<td class="p-2 col-2"><%=partyList.get(i).getUserId() %></td>
-									<td class="p-2 col-1"><%=partyList.get(i).getBoardDate() %></td>
-									<td class="p-2 col-2"><%=partyList.get(i).getPartyEnd() %></td>
+									<td class="col-1">
+									<%
+										if(partyList.get(i).getCountList() < 3 && partyList.get(i).getPartyYn().equals("N")) {
+									%>
+											<span class="badge badge-primary p-2 font-weight-normal">모집중</span>								
+									<%		
+										} else if(partyList.get(i).getCountList() == 3 && partyList.get(i).getPartyYn().equals("N")) {
+									%>
+											<span class="badge badge-success p-2 font-weight-normal">FULL</span>								
+									<%
+										} else if(partyList.get(i).getPartyYn().equals("Y")) {
+									%>
+											<span class="badge badge-danger p-2 font-weight-normal">마감</span>								
+									<%	
+										} else {}
+									%>											
+									</td>
+									<td class="p-2 col-1"><%=partyList.get(i).getCountList() + 1%>/4</td>
+									<td class="p-2 col-2"><%=partyList.get(i).getBoardDate() %></td>
+									<td class="p-2 col-2"><%=partyList.get(i).getDistance() %></td>
+									<td class="p-2 col-2"><%=partyList.get(i).getPrice() %></td>
 									<td class="p-2 col-1"><%=partyList.get(i).getRestType() %></td>
+									<td class="p-2 col-2"><%=partyList.get(i).getRestCode() %></td>
 									<td class="p-2 col-1">
 										<a id="seq" class="btn btn-info" href="select.do?boardSeq=<%=partyList.get(i).getBoardSeq()%>">
 											조회
@@ -79,28 +98,26 @@ List<PartyBoardVO> partyList = (List<PartyBoardVO>)request.getAttribute("list");
 		
 							%>
 							<tr>
-								<td colspan="7">게시판 정보가 없습니다.</td>
+								<td colspan="8">게시판 정보가 없습니다.</td>
 							</tr>
 							<%
 							}
 							%>
 								<tr class="col-12 d-flex justify-content-start">
 									<td class="col-12">
+									
 								<%
-									if(userType == null) {
+									if(userType.equals("일반회원") || userType.equals("관리자")) {
 								%>
-										<span>DDIT 인증 회원만 파티 등록이 가능합니다.</span>
-								<%
-									} else if(userType.equals("일반회원") || userType.equals("관리자")) {
-								%>
-										<a class="btn btn-warning btn-lg float-right" href="">파티 등록</a>
+										<a class="btn btn-warning btn-lg float-right" href="<%=request.getContextPath()%>/PARTY/insert.do">파티 등록</a>
 								<%		
 									} else {
 								%>
 										<span>DDIT 인증 회원만 파티 등록이 가능합니다.</span>
-								<%										
-									}
-								%>
+								<%		
+									} 									
+								%>	
+									
 									</td>
 								</tr>	
 															
@@ -111,7 +128,6 @@ List<PartyBoardVO> partyList = (List<PartyBoardVO>)request.getAttribute("list");
 			</div>
 
 		</div>
-		<!-- /.row -->
 
 	</div>
 

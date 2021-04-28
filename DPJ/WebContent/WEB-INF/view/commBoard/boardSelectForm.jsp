@@ -20,7 +20,7 @@
 			<!-- Blog Entries Column -->
 			<div class="col-md-12">
 				<h1 class="my-4">
-					<%=cv.getCode() %> 커뮤니티 게시판
+					<%=cv.getCode() %> 게시판
 				</h1>
 
 				<!-- Blog Post -->
@@ -28,19 +28,18 @@
 					<div class="card-body">
 						<table class="table" >
 							<tbody>
-								<tr class="d-flex text-left">
-									<th class="col-1 ">제목</th>
-									<th class="col-3 " name="boardTitle"><%=cv.getBoardTitle() %></th>
-									<th class="col-6 "></th>
-									<th class="col-1 "><small>조회수</small></th>
-									<th class="col-1 "name="boardHitsNumber"><small><%=cv.getBoardHitsNumber() %></small></th>
+								<tr class="d-flex text-left col-xs-12">
+									<th class="col-xs-2 ">제목</th>
+									<th class="col-xs-10 " name="boardTitle"><%=cv.getBoardTitle() %></th>
 								</tr>
-								<tr class="d-flex text-left">
-									<td class="col-1 ">작성자</td>
-									<td class="col-3 "name="userId"><%=cv.getUserId()%></td>
-									<th class="col-6 "></th>
-									<td class="col-1 "><small>작성일</small></td>
-									<td class="col-1 "name="boardDate"><small><%=cv.getBoardDate() %></small></td>
+								<tr class="d-flex text-left col-xs-12">
+									<td class="col-xs-1 "><small>작성자</small></td>
+									<td class="col-xs-3 "name="userId"><%=cv.getUserId()%></td>
+									<th class="col-xs-2 "><small>조회수</small></th>
+									<th class="col-xs-2 "name="boardHitsNumber"><small><%=cv.getBoardHitsNumber() %></small></th>
+									<td class="col-xs-2 "><small>작성일</small></td>
+									<td class="col-xs-2 "name="boardDate"><small><%=cv.getBoardDate() %></small></td>
+
 								</tr>
 								<tr class="d-flex text-left">
 									<td class="col-12"><img id="atchFile" class="col-12" src="<%=request.getContextPath() %>/filedownload.do?fileId=<%=cv.getAtchFileId() %>">
@@ -62,12 +61,18 @@
 							</tbody>
 						</table>
 						<div class="card-footer d-flex justify-content-center">
-							<a class="btn btn-lg btn-secondary" type="button" href="main.do">목록으로 돌아가기</a>
+					<div class="d-flex justify-content-center mb-4">
+							<a id="list" class="btn btn-lg btn-secondary" type="button" href="main.do">목록</a>
 								&nbsp;&nbsp;
-
-							<a id="upd" class="btn btn-lg btn-secondary" type="submit" href="update.do">수정하기</a>
-								&nbsp;&nbsp;
-							<a id="del" class="btn btn-lg btn-secondary" type="reset" href="delete.do">삭제하기</a>
+					<% if(userId ==null){}
+					else if(userId.equals("" + cv.getUserId()+ "") || userType.equals("관리자")){
+					%>
+						<a id="upd" class="btn btn-lg btn-secondary" type="submit" href="update.do?boardSeq=<%=cv.getBoardSeq()%>">수정하기</a>
+							&nbsp;&nbsp;
+						<a id="del" class="btn btn-lg btn-secondary" type="reset" onclick="alert('삭제하시겠습니까?')" href="delete.do?boardSeq=<%=cv.getBoardSeq()%>">삭제하기</a>
+					</div>
+					<% }
+					else{}%>
 					</div>
 						</div>
 					</div>
@@ -108,8 +113,7 @@
 							%>
 							</tbody>
 							<%
-								if(userId == null) {
-								} else {
+								if(userId != null){
 							%>
 							<tbody id="replyArea">
 								<tr class="d-flex text-left">
@@ -130,12 +134,6 @@
 						</table>
 					</div>
 				</div>
-				<!-- Pagination -->
-				<ul class="pagination justify-content-center mb-4">
-					<li class="page-item"><a class="page-link" href="#">&larr;Older</a></li>
-					<li class="page-item disabled"><a class="page-link" href="#">Newer&rarr;</a></li>
-				</ul>
-
 			</div>
 		</div>
 	</div>
