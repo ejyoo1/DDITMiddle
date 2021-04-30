@@ -26,24 +26,24 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-6">
-							<ul class="list-unstyled mb-0">
+														<ul class="list-unstyled mb-0">
 								<li><a class="text-info" href="<%=request.getContextPath() %>/commBoard/main.do">커뮤니티 통합</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/devBoard/list.do">개발 커뮤니티</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/jobBoard/list.do">취업 커뮤니티</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/socialBoard/list.do">잡담 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/DEV/list.do">개발 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/JOB/list.do">취업 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/SOCIAL/list.do">잡담 커뮤니티</a></li>
 							</ul>
 						</div>
 						<div class="col-lg-6">
 							<ul class="list-unstyled mb-0">
 								<li><a class="text-info" href="<%=request.getContextPath() %>/classBoard/main.do">클래스 통합</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/401Board/list.do">401호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/402Board/list.do">402호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/403Board/list.do">403호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/404Board/list.do">404호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/405Board/list.do">405호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/406Board/list.do">406호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/407Board/list.do">407호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/408Board/list.do">408호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS401/list.do">401호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS402/list.do">402호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS403/list.do">403호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS404/list.do">404호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS405/list.do">405호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS406/list.do">406호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS407/list.do">407호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS408/list.do">408호</a></li>
 							</ul>
 						</div>
 					</div>
@@ -85,7 +85,7 @@
 							%>
 
 							<tr class="d-flex justify-content-start">
-								<td class="col-2"><a href="select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
+								<td class="col-2"><a href="<%=request.getContextPath() %>/<%=boardList.get(i).getCode() %>/select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
 								<td class="col-2"><%=boardList.get(i).getCode() %></td>
 								<td class="col-4"><%=boardList.get(i).getBoardTitle() %></td>
 								<td class="col-2"><%=boardList.get(i).getUserId() %></td>
@@ -125,7 +125,7 @@
 					else if(userType.equals("일반회원") || userType.equals("관리자")){
 					%>
 					<div class="d-flex justify-content-center mb-4">
-						<div class="btn-info"><a class="btn btn-lg" href="<%=request.getContextPath() %>/classBoard/insert.do?">게시글 등록</a></div>
+						<div class="btn-info"><a class="btn btn-lg" href="<%=request.getContextPath() %>/CLASS401/insert.do?">게시글 등록</a></div>
 					</div>
 					<% }
 					else{}%>

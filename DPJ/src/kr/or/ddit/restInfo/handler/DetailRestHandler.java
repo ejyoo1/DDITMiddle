@@ -26,6 +26,8 @@ public class DetailRestHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		
 		//식당 번호 가져오기
 		String restCode = req.getParameter("restCode");
 		System.out.println(restCode);

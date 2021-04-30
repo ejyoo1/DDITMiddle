@@ -6,6 +6,7 @@ import java.util.List;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import kr.or.ddit.comment.vo.CommentVO;
+import kr.or.ddit.partyBoard.vo.PartyBoardVO;
 import kr.or.ddit.qna.vo.QnABoardVO;
 import kr.or.ddit.review.vo.ReviewVO;
 
@@ -36,4 +37,13 @@ public interface IMyPageDao {
 	 * @throws SQLException JDBC 관련 객체 발생
 	 */
 	public List<ReviewVO> getAllMyPageReview(SqlMapClient smc, ReviewVO reviewVo) throws SQLException;
+	
+	/**
+	 * 유저 ID를 기준으로 파티 모집 게시글을 가져오는 메서드
+	 * @param smc SqlMapClient 객체
+	 * @param partyBoardVo 회원 ID를 담고있는 PartyBoardVO 객체
+	 * @return 리뷰목록
+	 * @throws SQLException JDBC 관련 객체 발생
+	 */
+	public List<PartyBoardVO> getAllMyPagePartyBoard(SqlMapClient smc, PartyBoardVO partyBoardVo) throws SQLException;
 }

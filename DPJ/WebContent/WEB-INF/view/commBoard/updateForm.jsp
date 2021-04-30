@@ -18,6 +18,7 @@ String msg = request.getParameter("msg") == null ? "" : request.getParameter("ms
 <input  type="hidden" value="<%=userId %>" name="userId">
 <input  type="hidden" value="<%=cv.getBoardSeq() %>" name="boardSeq">
 <input  type="hidden" value="<%=cv.getAtchFileId() %>" name="atchFileId">
+<input  type="hidden" value="<%=cv.getCode() %>" name="code">
 
 	<div class="container">
 		<div class="row">
@@ -25,19 +26,48 @@ String msg = request.getParameter("msg") == null ? "" : request.getParameter("ms
 			<!-- Blog Entries Column -->
 			<div class="col-md-12">
 				<h1 class="my-4">
-					개발 커뮤니티 게시판
+					<%
+					String boardCode ="";
+					if(cv.getCode().equals("DEV")){
+						boardCode = "개발";
+					}
+					else if(cv.getCode().equals("JOB")){
+						boardCode = "취업";
+					}
+					else if(cv.getCode().equals("SOCIAL")){
+						boardCode = "잡담";
+					}
+					else if(cv.getCode().equals("CLASS401")){
+						boardCode = "401호";
+					}
+					else if(cv.getCode().equals("CLASS402")){
+						boardCode = "402호";
+					}
+					else if(cv.getCode().equals("CLASS403")){
+						boardCode = "403호";
+					}
+					else if(cv.getCode().equals("CLASS404")){
+						boardCode = "404호";
+					}			
+					else if(cv.getCode().equals("CLASS405")){
+						boardCode = "405호";
+					}			
+					else if(cv.getCode().equals("CLASS406")){
+						boardCode = "406호";
+					}			
+					else if(cv.getCode().equals("CLASS407")){
+						boardCode = "407호";
+					}			
+					else if(cv.getCode().equals("CLASS408")){
+						boardCode = "408호";
+					}			
+					%><%=boardCode %> 게시판
 				</h1>
 
 				<!-- Blog Post -->
 				<div class="card mb-4">
 					<div class="card-body">
-						<h2 class="card-title">
-								<select name="code" id="code">
-									<option  value="개발">개발</option>
-									<option  value="취업">취업</option>
-									<option  value="잡담">잡담</option>
-								</select>
-							게시판</h2>
+						<h2 class="card-title">수정하기</h2>
 						<table class="table" >
 							<tbody>
 								<tr class="d-flex text-left">
@@ -66,7 +96,7 @@ String msg = request.getParameter("msg") == null ? "" : request.getParameter("ms
 						<button class="btn btn-lg btn-secondary" type="submit">수정하기</button>
 						&nbsp;&nbsp;
 						&nbsp;&nbsp;
-						<a class="btn btn-lg btn-secondary" type="reset" href="main.do">목록으로 돌아가기</a>
+						<a class="btn btn-lg btn-secondary" type="reset" href="<%=request.getContextPath() %>/<%=cv.getCode() %>/main.do">목록으로 돌아가기</a>
 					</div>
 				</div>
 			</div>

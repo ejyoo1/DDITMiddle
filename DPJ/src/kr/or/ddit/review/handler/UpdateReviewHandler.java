@@ -41,7 +41,6 @@ public class UpdateReviewHandler implements CommandHandler{
 		
 		ReviewVO review = new ReviewVO();
 		BeanUtils.populate(review, req.getParameterMap());
-		review.setAtchFileId(atchFileVO.getAtchFileId());
 		
 		String restCode = req.getParameter("restCode");
 		String userId = req.getParameter("userId");

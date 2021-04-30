@@ -105,7 +105,7 @@ public class RestInfoServiceImpl implements IRestInfoService {
 		try {
 			res = restInfoDao.insertDips(smc, rfv);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return res;
 	}
@@ -119,6 +119,17 @@ public class RestInfoServiceImpl implements IRestInfoService {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	@Override
+	public List<RestInfoVO> getRestInfoAboutUser(String userId) {
+		List<RestInfoVO> favInfoList = null;
+		try {
+			favInfoList = restInfoDao.getRestInfoAboutUser(smc, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return favInfoList;
 	}
 
 }

@@ -70,13 +70,24 @@ public class RestInfoDaoImpl implements IRestInfoDao{
 
 	@Override
 	public int insertDips(SqlMapClient smc, RestFavVO rfv) throws SQLException {
-		int cnt = (int)smc.queryForObject("restFav.insertDips", rfv);
+		int cnt = 0;
+		Object obj = smc.insert("restFav.insertDips", rfv);
+		if(obj==null) {
+			cnt = 1;
+		}
+		System.out.println("cnt!!!!!!!!!!!!!!!!!!!!!:"+cnt);
 		return cnt;
 	}
 
 	@Override
 	public int deleteDips(SqlMapClient smc, RestFavVO rfv) throws SQLException {
-		int cnt = (int)smc.queryForObject("restFav.deleteDips", rfv);
+		int cnt = (int)smc.delete("restFav.deleteDips", rfv);
 		return cnt;
+	}
+
+	@Override
+	public List<RestInfoVO> getRestInfoAboutUser(SqlMapClient smc, String userId) throws SQLException {
+		List<RestInfoVO> favInfoList = smc.queryForList("restFav.getRestInfoAboutUser", userId);
+		return favInfoList;
 	}
 }

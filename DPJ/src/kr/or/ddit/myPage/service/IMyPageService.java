@@ -1,8 +1,10 @@
 package kr.or.ddit.mypage.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import kr.or.ddit.comment.vo.CommentVO;
+import kr.or.ddit.partyBoard.vo.PartyBoardVO;
 import kr.or.ddit.qna.vo.QnABoardVO;
 import kr.or.ddit.review.vo.ReviewVO;
 
@@ -27,4 +29,11 @@ public interface IMyPageService {
 	 * @return 리뷰 목록 출력
 	 */
 	public List<ReviewVO> getAllMyPageReview(ReviewVO reviewVo);
+	
+	/**
+	 * 유저 ID를 기준으로 파티 모집 게시글을 가져오는 메서드
+	 * @param partyBoardVo 회원 ID를 담고있는 PartyBoardVO 객체
+	 * @return 리뷰 목록
+	 */
+	public List<PartyBoardVO> getAllMyPagePartyBoard(PartyBoardVO partyBoardVo);
 }

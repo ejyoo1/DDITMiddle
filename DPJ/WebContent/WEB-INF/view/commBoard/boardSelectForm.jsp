@@ -20,7 +20,42 @@
 			<!-- Blog Entries Column -->
 			<div class="col-md-12">
 				<h1 class="my-4">
-					<%=cv.getCode() %> 게시판
+					<%
+					String boardCode ="";
+					if(cv.getCode().equals("DEV")){
+						boardCode = "개발";
+					}
+					else if(cv.getCode().equals("JOB")){
+						boardCode = "취업";
+					}
+					else if(cv.getCode().equals("SOCIAL")){
+						boardCode = "잡담";
+					}
+					else if(cv.getCode().equals("CLASS401")){
+						boardCode = "401호 12월반";
+					}
+					else if(cv.getCode().equals("CLASS402")){
+						boardCode = "402호 3월반";
+					}
+					else if(cv.getCode().equals("CLASS403")){
+						boardCode = "403호 1월반";
+					}
+					else if(cv.getCode().equals("CLASS404")){
+						boardCode = "404호 2월반";
+					}			
+					else if(cv.getCode().equals("CLASS405")){
+						boardCode = "405호 3월반";
+					}			
+					else if(cv.getCode().equals("CLASS406")){
+						boardCode = "406호 11월반";
+					}			
+					else if(cv.getCode().equals("CLASS407")){
+						boardCode = "407호 10월반";
+					}			
+					else if(cv.getCode().equals("CLASS408")){
+						boardCode = "408호 ?월반";
+					}	
+					%><%=boardCode %> 게시판
 				</h1>
 
 				<!-- Blog Post -->
@@ -62,14 +97,16 @@
 						</table>
 						<div class="card-footer d-flex justify-content-center">
 					<div class="d-flex justify-content-center mb-4">
-							<a id="list" class="btn btn-lg btn-secondary" type="button" href="main.do">목록</a>
+							<a id="list" class="btn btn-lg btn-secondary" type="button" href="<%=request.getContextPath() %>/<%=cv.getCode() %>/list.do">목록</a>
 								&nbsp;&nbsp;
-					<% if(userId ==null){}
+					<% if(userId ==null){
+						
+					}
 					else if(userId.equals("" + cv.getUserId()+ "") || userType.equals("관리자")){
 					%>
-						<a id="upd" class="btn btn-lg btn-secondary" type="submit" href="update.do?boardSeq=<%=cv.getBoardSeq()%>">수정하기</a>
+						<a id="upd" class="btn btn-lg btn-secondary" type="submit" href="<%=request.getContextPath() %>/<%=cv.getCode() %>/update.do?boardSeq=<%=cv.getBoardSeq()%>">수정하기</a>
 							&nbsp;&nbsp;
-						<a id="del" class="btn btn-lg btn-secondary" type="reset" onclick="alert('삭제하시겠습니까?')" href="delete.do?boardSeq=<%=cv.getBoardSeq()%>">삭제하기</a>
+						<a id="del" class="btn btn-lg btn-secondary" type="reset" onclick="alert('삭제하시겠습니까?')" href="<%=request.getContextPath() %>/<%=cv.getCode() %>/delete.do?boardSeq=<%=cv.getBoardSeq()%>">삭제하기</a>
 					</div>
 					<% }
 					else{}%>

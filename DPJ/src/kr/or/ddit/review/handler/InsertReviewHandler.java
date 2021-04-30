@@ -1,5 +1,7 @@
 package kr.or.ddit.review.handler;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +12,9 @@ import kr.or.ddit.common.handler.CommandHandler;
 import kr.or.ddit.common.service.AtchFileServiceImpl;
 import kr.or.ddit.common.service.IAtchFileService;
 import kr.or.ddit.common.vo.AtchFileVO;
+import kr.or.ddit.restInfo.service.IRestInfoService;
+import kr.or.ddit.restInfo.service.RestInfoServiceImpl;
+import kr.or.ddit.restInfo.vo.RestInfoVO;
 import kr.or.ddit.review.service.IReviewService;
 import kr.or.ddit.review.service.ReviewServiceImpl;
 import kr.or.ddit.review.vo.ReviewVO;
@@ -30,6 +35,11 @@ public class InsertReviewHandler implements CommandHandler{
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		if(req.getMethod().equals("GET")) {
+			
+			IRestInfoService restInfoService = RestInfoServiceImpl.getInstance();
+			List<RestInfoVO> restList = restInfoService.getAllRestInfoList();
+			
+			req.setAttribute("restList", restList);
 			return VIEW_PAGE;
 		}else {
 			FileItem item = ((FileUploadRequestWrapper)req).getFileItem("atchFileId") == null ? null

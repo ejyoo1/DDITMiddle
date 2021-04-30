@@ -16,38 +16,35 @@ import kr.or.ddit.review.service.ReviewServiceImpl;
 import kr.or.ddit.review.vo.ReviewVO;
 
 public class DeleteDipsHandler implements CommandHandler {
-	private static final String VIEW_PAGE = "/WEB-INF/view/restaurant/restaurantDetail.jsp";
+	private static final String VIEW_PAGE = "/DPJ/searchRest/detailRest.do";
 
 	@Override
 	public boolean isRedirect(HttpServletRequest req) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		
 		//식당 번호 가져오기
-		String restCode = req.getParameter("restCode");
-		System.out.println(restCode);
+		String restCode = req.getParameter("restCodefav");
 		String userId = req.getParameter("userId");
-		System.out.println("userId : "+userId + "==");
 		
+		
+		RestFavVO rfv = new RestFavVO();
+		
+		rfv.setRestCode(restCode);
+		rfv.setUserId(userId);
 		//서비스 호출
 		IRestInfoService restService = RestInfoServiceImpl.getInstance();
-		
-		RestInfoVO rv = restService.getRest(restCode);
-		int dipsCnt = restService.getUserAboutRest(restCode);
-		List<RestFavVO> favList = restService.getRestAboutUser(userId);
-		
-		req.setAttribute("restVO", rv);
-		req.setAttribute("dipsCnt", dipsCnt);
-		req.setAttribute("favList", favList);
+
+		restService.deleteDips(rfv);
 		
 		// 리뷰 가져오기
 //		IReviewService reviewService = ReviewServiceImpl.getInstance();
 //		List<ReviewVO> reviewList = reviewService.restReview(restCode);
 //		req.setAttribute("reviewList", reviewList);
 		
-		return VIEW_PAGE;
+		return VIEW_PAGE + "?restCode=" + restCode + "&userId=" + userId;
 	}
 }

@@ -29,7 +29,7 @@
 		uSrc = "/assets/img/profile/E.png";
 	} else if(pv.getUserProfile().equals("F")) {
 		uSrc = "/assets/img/profile/F.png";
-	}
+	} 
 	
 %>    
     
@@ -39,7 +39,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<div class="text-center">
-				<h2 class="section-heading ">한 끼만 같이 먹어도 우리는 모두 친구!</h2>
+				<h2 class="section-heading "><i class="fas fa-utensils mr-3"></i>한 끼만 같이 먹어도 우리는 모두 친구!</h2>
 				<h3 >모집중인 Meal 파티입니다.</h3>
 			</div>
 			
@@ -58,13 +58,25 @@
 							</tr>
 							<tr class="d-flex">
 								<td class="col-lg-1">가격</td>
-								<td class="col-lg-2"><a class="btn btn-md btn-success">8000원</a></td>
+								<td class="col-lg-2"><a class="btn btn-md btn-success"><%=pv.getPrice() %></a></td>
 								<td class="col-lg-1">거리</td>
-								<td class="col-lg-2"><a class="btn btn-md btn-info">10분(600m)</a></td>
+								<td class="col-lg-2"><a class="btn btn-md btn-info"><%=pv.getDistance() %></a></td>
 								<td class="col-lg-1">분류</td>
-								<td class="col-lg-2"><a class="btn btn-md btn-danger">한식</a></td>
+								<td class="col-lg-2"><a class="btn btn-md btn-danger"><%=pv.getRestType() %></a></td>
 								<td class="col-lg-1">식당</td>
-								<td class="col-lg-2"><a class="btn btn-md btn-warning">세호식당</a></td>
+								<td class="col-lg-2">
+									<%
+										if(pv.getRestName() != null) {
+									%>
+									<a class="btn btn-md btn-warning"><%=pv.getRestName() %></a>
+									<%
+										} else {
+									%>
+									<a class="btn btn-md btn-warning">아무거나</a>
+									<%		
+										}
+									%>	
+								</td>
 							</tr>
 							<tr class="d-flex text-left">
 								<td class="col-12 pt-5">
@@ -124,26 +136,27 @@
 					<hr>
 					</div>
 					
+					<div class="d-flex justify-content-center mb-5">
 					<!-- 밀파티 참가 및 출발 -->
 					<%
 						if(userId.equals(pv.getUserId()) && pv.getPartyYn().equals("N")) {
 					%>
-							<div class="d-flex justify-content-center mb-5">
-								<a class="btn btn-lg btn-success" onclick="fn_endParty()">파티모집 마감하기</a>
-							</div>
+							<a class="btn btn-lg btn-success" onclick="fn_endParty()">파티모집 마감하기</a>
 					<%
+						} else if(userId.equals(pv.getUserId()) && pv.getPartyYn().equals("Y")) {
+					%>
+							<a class="btn btn-lg btn-warning ml-5" href="<%=request.getContextPath() %>/searchRest/insertReview.do?restCode=<%=pv.getRestCode() %>">리뷰 쓰러가기</a>
+					<%		
 						} else if(pv.getPartyYn().equals("Y")) {
 					%>
-							<div class="d-flex justify-content-center mb-3">
-								<a><button class="btn btn-lg btn-secondary" disabled>마감된 파티</button></a>
-							</div>
+							<a><button class="btn btn-lg btn-secondary" disabled>마감된 파티</button></a>
 					<%		
 						}
 					%>
-					
-					
+
 					<%
 					boolean joinYn = false;
+					boolean review = false;
 					if(userType.equals("일반회원") && pv.getPartyYn().equals("N") && !pv.getUserId().equals(userId) && joinList.size() < 4) {
 						for(int k = 0; k < joinList.size(); k++) {
 							if(joinList.get(k).getUserId().equals(userId)) {
@@ -153,20 +166,29 @@
 						}
 						if(joinYn) {
 							%>			
-							<div class="d-flex justify-content-center mb-5">
-								<a class="btn btn-lg btn-danger" onclick="fn_quit()">파티 탈퇴하기</a>
-							</div>	
+							<a class="btn btn-lg btn-danger" onclick="fn_quit()">파티 탈퇴하기</a>
 							<%
 						} else if(!joinYn) {
 							%>
-							<div class="d-flex justify-content-center mb-5">
-								<a class="btn btn-lg btn-success" onclick="fn_join()">파티 참가하기</a>
-							</div>
+							<a class="btn btn-lg btn-success" onclick="fn_join()">파티 참가하기</a>
 							<%	
 						}
+					} else if(userType.equals("일반회원") && pv.getPartyYn().equals("Y") && !pv.getUserId().equals(userId)) {
+						for(int k = 0; k < joinList.size(); k++) {
+							if(joinList.get(k).getUserId().equals(userId)) {
+								review = true;
+							} 
+						}
+						if(review) {
+						%>
+							<a class="btn btn-lg btn-warning ml-5" href="<%=request.getContextPath() %>/searchRest/insertReview.do?restCode=<%=pv.getRestCode() %>">식당 리뷰 쓰기</a>
+						<%
+							
+						}
 					}
-					%>
 					
+					%>
+					</div>
 					
 					<div class="card-footer d-flex justify-content-center">
 						<a class="btn btn-lg btn-secondary" type="button" href="main.do">목록으로 돌아가기</a>
@@ -174,8 +196,8 @@
 						<%
 							if(pv.getUserId().equals(userId)) {
 						%>							
-						<a id="upd" class="btn btn-lg btn-secondary ml-5" type="submit" href="update.do">수정하기</a>
-						<a id="del" class="btn btn-lg btn-secondary ml-5" type="reset" href="delete.do" >삭제하기</a>
+						<a id="upd" class="btn btn-lg btn-secondary ml-5" onclick="fn_boardUpdate('<%=pv.getBoardSeq()%>');">수정하기</a>
+						<a id="del" class="btn btn-lg btn-secondary ml-5" onclick="fn_boardDelete('<%=pv.getBoardSeq()%>')">삭제하기</a>
 						<%
 							}
 						%>
@@ -220,6 +242,9 @@
 						}
 					%>
 					</tbody>
+					<%
+					if(userType.equals("일반회원") || userType.equals("관리자")) {
+					%>
 					<tbody id="replyArea">
 						<tr class="d-flex text-left">
 							<th class="col-12 table-info" id="rUserId"><%=userId %></th>
@@ -233,6 +258,9 @@
 							</td>
 						</tr>
 					</tbody>
+					<%	
+					}
+					%>
 				</table>
 			</div>
 		</div>
@@ -244,11 +272,12 @@
 	<input type="hidden" name="boardSeq" value="<%=pv.getBoardSeq()%>">
 	<input type="hidden" name="userId" value=<%=userId%>>
 	<input type="hidden" name="userProfile" value=<%=userPhoto%>>
+	<input type="hidden" name="partyEnd" value="<%=pv.getPartyEnd()%>">
 </form>
 
 <!-- 댓글에서 들고나갈 값 -->
 <form id="fm" method="post">
-	<input type="hidden" name="code" value="DEV">
+	<input type="hidden" name="code" value="PARTY">
 	<input type="hidden" id="boardSeq" name="boardSeq" value="<%=pv.getBoardSeq()%>">
 	<input type="hidden" id="userId" name="userId" value=<%= userId%>>
 	<input type="hidden" id="replyContent" name="replyContent">
@@ -262,7 +291,6 @@
 			$('#fm').attr('action', '<%=request.getContextPath()%>/PARTY/endParty.do');
 			$('#fm').submit();
 		}
-		
 	}
 	
 	function fn_join() {
@@ -275,6 +303,19 @@
 	function fn_quit() {
 		if(confirm("파티에서 탈퇴하시겠습니까?")) {
 			$('#joinInfo').attr('action', '<%=request.getContextPath()%>/PARTY/quitParty.do');
+			$('#joinInfo').submit();
+		}
+	}
+	
+	function fn_boardUpdate(seq) {
+		$('#joinInfo').attr('method', 'get');
+		$('#joinInfo').attr('action', '<%=request.getContextPath()%>/PARTY/update.do');
+		$('#joinInfo').submit();
+	}
+	
+	function fn_boardDelete(seq) {
+		if(confirm("삭제하시겠습니까?")) {
+			$('#joinInfo').attr('action', '<%=request.getContextPath()%>/PARTY/delete.do');
 			$('#joinInfo').submit();
 		}
 	}
@@ -316,7 +357,7 @@
 	
 	function fn_delete(seq) {
 		if(confirm('댓글을 삭제하시겠습니까?')) {
-			$('#fm').attr("action", "<%=request.getContextPath()%>/comment/delete.do");
+			$('#fm').attr('action', '<%=request.getContextPath()%>/comment/delete.do');
 			$('#replySeq').val(seq);
 			$('#fm').submit();
 		}

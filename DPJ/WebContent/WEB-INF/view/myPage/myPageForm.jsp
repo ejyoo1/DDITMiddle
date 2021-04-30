@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="kr.or.ddit.userDdit.vo.UserDditVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,6 +9,8 @@
 <%
 	UserDditVO userDdit = (UserDditVO) request.getAttribute("userDdit");
 %>
+<link href="/DPJ/assets/css/register/registerForm.css" rel="stylesheet" />
+<script src="/DPJ/assets/js/register/register.js"></script>
   <!-- Page Content -->
 	  <div class="container">
 	
@@ -46,22 +50,32 @@
 			          			<td class="p-2 col-6">이름 : </td>
 			          			<td class="p-2 col-6"><%= userDdit.getDditName() %></td>
 			          		</tr>
+			          		<%
+			          		Date nowDate = new Date(); 
+			          		System.out.println("포맷 지정 전 : " + userDdit.getDditBir()); 
+			          		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); //원하는 데이터 포맷 지정 
+			          		String strNowDate = simpleDateFormat.format(nowDate); //지정한 포맷으로 변환 
+			          		System.out.println("포맷 지정 후 : " + strNowDate);
+
+			          		%>
+
 			          		<tr class="d-flex text-center col-12">
 			          			<td class="p-2 col-6">생년월일 : </td>
 			          			<td class="p-2 col-6">
-			          				<input class="form-control py-4" id="dditBir" name="dditBir" type="date" />
+			          				<input class="form-control py-4" id="dditBir" name="dditBir" type="date" value="<%= strNowDate %>" />
 			          			</td>
 			          		</tr>
+			    
 			          		<tr class="d-flex text-center col-12">
 			          			<td class="p-2 col-6">휴대폰번호 : </td>
 			          			<td class="p-2 col-6">
-			          				<input class="form-control py-4" id="dditHp" name="dditHp" type="text" />
+			          				<input class="form-control py-4" id="dditHp" name="dditHp" type="text" value="<%= userDdit.getDditHp()%>"/>
 			          			</td>
 			          		</tr>
 			          		<tr class="d-flex text-center col-12">
 			          			<td class="p-2 col-6">이메일 : </td>
 			          			<td class="p-2 col-6">
-			          				<input class="form-control py-4" id="dditHp" name="dditMail" type="text" />
+			          				<input class="form-control py-4" id="dditHp" name="dditMail" type="text" value="<%= userDdit.getDditMail()%>"/>
 			          			</td>
 			          		</tr>
 			          		<tr class="d-flex text-center col-12">
@@ -98,8 +112,26 @@
 								</td>
 			          		</tr>
 			          		<tr class="d-flex text-center col-12">
+			          			<td class="p-2 col-6">
+			          				프로필 사진 : 
+			          			</td>
+			          			<td class="p-2 col-6">
+			          				<div class="form-group"><!-- 프로필 사진 시작 -->
+										<input class="form-control py-4" id="userPhoto" type="hidden" name="userPhoto" value="A" readonly/>
+										<img src="/DPJ/assets/img/profile/A.png" id="defaultImg" class="rounded profileImg" alt="A" name="A" style=" width: 30px;">
+										<img src="/DPJ/assets/img/profile/B.png" class="rounded profileImg" alt="B" name="B" style=" width: 30px;">
+										<img src="/DPJ/assets/img/profile/C.png" class="rounded profileImg" alt="C" name="C" style=" width: 30px;">
+										<img src="/DPJ/assets/img/profile/D.png" class="rounded profileImg" alt="D" name="D" style=" width: 30px;">
+										<img src="/DPJ/assets/img/profile/E.png" class="rounded profileImg" alt="E" name="E" style=" width: 30px;">
+										<img src="/DPJ/assets/img/profile/F.png" class="rounded profileImg" alt="F" name="F" style=" width: 30px;">
+									</div><!-- 프로필 사진 종료 --><br>
+			          			</td>
+			          		</tr>
+			          		
+			          		
+			          		<tr class="d-flex text-center col-12">
 			          			<td class="p-2 col-12">
-			          			<a class="btn btn-lg btn-info" href="#" onclick="myPageSubmit('<%=request.getContextPath() %>/myPage/myPageEdit.do')">회원정보 저장하기</a>	 
+			          			<a class="btn btn-lg btn-info" href="#" onclick="myPageSubmit('<%=request.getContextPath() %>/mypage/myPageEdit.do')">회원정보 저장하기</a>	 
 			          			</td>
 			          		</tr>
 			        	</table>	
@@ -110,11 +142,10 @@
 	
 	      <!-- Sidebar Widgets Column -->
 	      <div class="col-md-4">
-			<br>
-			<br>
-	            <img class="card-text col-12" src="assets/img/team/2.jpg">
-	            
-   				<a class="btn btn-sm btn-info col-12" href="">프로필사진 수정하기</a>	
+	      <br>
+	      <br>
+				<h5 class="card-header">프로필 사진</h5>
+	            <img class="card-text col-12" src="/DPJ/assets/img/profile/<%= userPhoto %>.png" style="width: 100%;border: 1px solid lightgray; padding: 50px;">
    			<br>
 	        <!-- Categories Widget -->
 	        <div class="card my-4">
@@ -124,10 +155,10 @@
 	              <div class="col-lg-12">
 	                <ul class="list-unstyled mb-0">
 	                  <li>
-	                    <a class="text-info" href="#">내가 찜한 식당</a>
+	                    <a class="text-info" href="<%=request.getContextPath()%>/mypage/myDips.do">내가 찜한 식당</a>
 	                  </li>
 	                  <li>
-	                    <a class="text-info" href="#">내가 모집한 Meal파티</a>
+	                    <a class="text-info" href="<%=request.getContextPath()%>/mypage/myPagePartyBoard.do">내가 모집한 Meal파티</a>
 	                  </li>
 	                  <li>
 	                    <a class="text-info" href="<%=request.getContextPath() %>/mypage/myPageBoard.do">내가 쓴 문의 목록</a>
@@ -158,10 +189,10 @@
 	  <%@include file="/WEB-INF/view/common/mainFooter.jsp"%>
 	  <script>
 	  	function myPageSubmit(url) {
-	  		alert("test");
 	  		var fm = document.getElementById("fm");
 	  		fm.method = "post"
 	  		fm.action = url;
 	  		fm.submit();
 	  	}
+	  	
 	  </script>

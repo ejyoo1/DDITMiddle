@@ -27,7 +27,7 @@
 
 				<div class="card-body">
 					<h2 class="card-title">통합 커뮤니티</h2>
-					<p class="card-text">굿끼제먹 공식 BGM 브레이브걸스 - rollin</p>
+					<p>통합 커뮤니티 게시판에 오신걸 환영합니다!</p>
 				</div>
 				<div class="card-footer text-muted">
 					<table class="table col-12">
@@ -50,8 +50,49 @@
 							%>
 
 							<tr class="d-flex justify-content-start">
-								<td class="col-2"><a href="select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
-								<td class="col-2"><%=boardList.get(i).getCode() %></td>
+								<td class="col-2"><a href="<%=request.getContextPath() %>/<%=boardList.get(i).getCode() %>/select.do?boardSeq=<%=boardList.get(i).getBoardSeq()%>"><%=boardList.get(i).getBoardSeq()%></a></td>
+								<td class="col-2">
+								
+								<%
+					String boardCode ="";
+					if(boardList.get(i).getCode().equals("DEV")){
+						boardCode = "개발";
+					}
+					else if(boardList.get(i).getCode().equals("JOB")){
+						boardCode = "취업";
+					}
+					else if(boardList.get(i).getCode().equals("SOCIAL")){
+						boardCode = "잡담";
+					}
+					else if(boardList.get(i).getCode().equals("CLASS401")){
+						boardCode = "401호";
+					}
+					else if(boardList.get(i).getCode().equals("CLASS402")){
+						boardCode = "402호";
+					}
+					else if(boardList.get(i).getCode().equals("CLASS403")){
+						boardCode = "403호";
+					}
+					else if(boardList.get(i).getCode().equals("CLASS404")){
+						boardCode = "404호";
+					}			
+					else if(boardList.get(i).getCode().equals("CLASS405")){
+						boardCode = "405호";
+					}			
+					else if(boardList.get(i).getCode().equals("CLASS406")){
+						boardCode = "406호";
+					}			
+					else if(boardList.get(i).getCode().equals("CLASS407")){
+						boardCode = "407호";
+					}			
+					else if(boardList.get(i).getCode().equals("CLASS408")){
+						boardCode = "408호";
+					}			
+					%>
+								<%=boardCode %>
+								
+								
+								</td>
 								<td class="col-4"><%=boardList.get(i).getBoardTitle() %></td>
 								<td class="col-2"><%=boardList.get(i).getUserId() %></td>
 								<td class="col-2"><%=boardList.get(i).getBoardHitsNumber() %></td>
@@ -80,6 +121,7 @@
 					<%if(pagingVO.getLastPageNo() < pagingVO.getTotalPageCount()) {%>
 					<a href="main.do?pageNo=<%=pagingVO.getFirstPageNo() + pagingVO.getPageSize() %>">[다음]</a>
 					<%} %>
+					
 				</td>
 			</tr>
 		<%} %>
@@ -90,7 +132,7 @@
 					else if(userType.equals("일반회원") || userType.equals("관리자")){
 					%>
 					<div class="d-flex justify-content-center mb-4">
-						<div class="btn-info"><a class="btn btn-lg" href="insert.do">게시글 등록</a></div>
+						<div class="btn-info"><a class="btn btn-lg" href="<%=request.getContextPath() %>/DEV/insert.do">게시글 등록</a></div>
 					</div>
 					<% }
 					else{}%>
@@ -102,6 +144,8 @@
 		<!-- Sidebar Widgets Column -->
 		<div class="col-md-4">
 			<img class = "col-md-12" src="/DPJ/assets/img/about/9.png">
+			<p class="card-text">BGM 브레이브걸스 - rollin(1시간)</p>
+			<audio autoplay controls> <source src="<%=request.getContextPath() %>/assets/audio/lollin.mp4" type="audio/mp4"></audio>
 			<!-- Categories Widget -->
 			<div class="card my-4">
 				<h5 class="card-header">게시판 카테고리</h5>
@@ -110,22 +154,22 @@
 						<div class="col-lg-6">
 							<ul class="list-unstyled mb-0">
 								<li><a class="text-info" href="<%=request.getContextPath() %>/commBoard/main.do">커뮤니티 통합</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/devBoard/list.do">개발 커뮤니티</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/jobBoard/list.do">취업 커뮤니티</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/socialBoard/list.do">잡담 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/DEV/list.do">개발 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/JOB/list.do">취업 커뮤니티</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/SOCIAL/list.do">잡담 커뮤니티</a></li>
 							</ul>
 						</div>
 						<div class="col-lg-6">
 							<ul class="list-unstyled mb-0">
 								<li><a class="text-info" href="<%=request.getContextPath() %>/classBoard/main.do">클래스 통합</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/401Board/list.do">401호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/402Board/list.do">402호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/403Board/list.do">403호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/404Board/list.do">404호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/405Board/list.do">405호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/406Board/list.do">406호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/407Board/list.do">407호</a></li>
-								<li><a class="text-info" href="<%=request.getContextPath() %>/408Board/list.do">408호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS401/list.do">401호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS402/list.do">402호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS403/list.do">403호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS404/list.do">404호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS405/list.do">405호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS406/list.do">406호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS407/list.do">407호</a></li>
+								<li><a class="text-info" href="<%=request.getContextPath() %>/CLASS408/list.do">408호</a></li>
 							</ul>
 						</div>
 					</div>

@@ -43,7 +43,7 @@
 	          	
 	          	<table class="table col-12" id="#">
 	          		<thead>
-						<tr class="d-flex justify-content-start">
+						<tr class="d-flex text-center justify-content-start">
 							<th class="col-1">#</th>
 							<th class="col-3">댓글 위치</th> <!-- CODE -->
 							<th class="col-5">댓글 내용</th> <!-- REPLY_CONTENT -->
@@ -62,8 +62,28 @@
 	          					String boardCode = commentList.get(i).getCode();
 	          					if("DEV".equals(boardCode)){
 	          						boardCodeTxt = "커뮤니티-개발";
-	          						boardCodeFolder = "devBoard";
+	          						boardCodeFolder = "DEV";
+	          					} else if("QNA".equals(boardCode)){
+	          						boardCodeTxt = "문의";
+	          						boardCodeFolder = "QNA";
+	          					} else if("PARTY".equals(boardCode)){
+	          						boardCodeTxt = "파티";
+	          						boardCodeFolder = "PARTY";
+	          					} else if("CLASS".equals(boardCode)){
+	          						boardCodeTxt = "커뮤니티-소속";
+	          						boardCodeFolder = "QNA";
+	          					} else if("JOB".equals(boardCode)){
+	          						boardCodeTxt = "커뮤니티-직업";
+	          						boardCodeFolder = "JOB";
+	          					} else if("SOCIAL".equals(boardCode)){
+	          						boardCodeTxt = "커뮤니티-친목";
+	          						boardCodeFolder = "SOCIAL";
+	          					} else if("CLASS".equals(boardCode)){
+	          						boardCodeTxt = "커뮤니티-친목";
+	          						boardCodeFolder = "classBoard";
 	          					}
+	          						//QNA PARTH CLASS JOB SOCIAL
+	          						System.out.println("■■■■■ boardCodeFolder : " + boardCodeFolder);
 	          					%>
 	          					<tr class="d-flex text-center col-12">
 	          						<td class="p-2 col-1"> <%= (i+1) %> </td>
@@ -89,11 +109,11 @@
 	
 	      <!-- Sidebar Widgets Column -->
 	      <div class="col-md-4">
-			<br>
-			<br>
-	            <img class="card-text col-12" src="assets/img/team/2.jpg">
+	      <br>
+	      <br>
+				<h5 class="card-header">프로필 사진</h5>
+	            <img class="card-text col-12" src="/DPJ/assets/img/profile/<%= userPhoto %>.png" style="width: 100%;border: 1px solid lightgray; padding: 50px;">
 	            
-   				<a class="btn btn-sm btn-info col-12" href="">프로필사진 수정하기</a>	
    			<br>
 	        <!-- Categories Widget -->
 	        <div class="card my-4">
@@ -103,10 +123,10 @@
 	              <div class="col-lg-12">
 	                <ul class="list-unstyled mb-0">
 	                  <li>
-	                    <a class="text-info" href="#">내가 찜한 식당</a>
+	                    <a class="text-info" href="<%=request.getContextPath()%>/mypage/myDips.do">내가 찜한 식당</a>
 	                  </li>
 	                  <li>
-	                    <a class="text-info" href="#">내가 모집한 Meal파티</a>
+	                    <a class="text-info" href="<%=request.getContextPath()%>/mypage/myPagePartyBoard.do">내가 모집한 Meal파티</a>
 	                  </li>
 	                  <li>
 	                    <a class="text-info" href="<%=request.getContextPath() %>/mypage/myPageBoard.do">내가 쓴 문의 목록</a>

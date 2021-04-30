@@ -5,7 +5,7 @@
 <sqlMap namespace="review">
 
 	<insert id="insertReview" parameterClass="kr.or.ddit.review.vo.ReviewVO">
-		INSERT into(
+		INSERT into TB_REVIEW_BOARD(
 			  CODE			
 			, BOARD_SEQ    
 			, REST_CODE
@@ -20,7 +20,7 @@
 			, BOARD_DELETE 
 			)
 		VALUES(
-			  #code#
+			  'REVIEW'
 			, SEQ_REVIEW_BOARD.NEXTVAL
 			, #restCode#
 			, #userId#
@@ -28,7 +28,8 @@
 			, sysdate
 			, #boardContent#
 			, #restScore#
-			, #atchFileId#
+			, -1
+			, -1
 			, 0
 			, 'N'
 		)
@@ -37,7 +38,7 @@
 	<update id="updateReview" parameterClass="kr.or.ddit.review.vo.ReviewVO">
 		UPDATE TB_REVIEW_BOARD
 		SET 
-			, BOARD_TITLE   = #boardTitle#
+			BOARD_TITLE   = #boardTitle#
 			, BOARD_DATE    = SYSDATE
 			, BOARD_CONTENT = #boardContent#
 			, REST_SCORE    = #restScore#
@@ -71,7 +72,7 @@
 		WHERE BOARD_DELETE = 'N'
 	</select>
 	
-	<select id="getRestInfo" resultClass="kr.or.ddit.review.vo.ReviewVO">
+	<select id="getRestInfo" resultClass="kr.or.ddit.restInfo.vo.RestInfoVO">
 		SELECT
 			  A.REST_CODE	      restCode
 			, A.USER_ID           userId
@@ -92,7 +93,7 @@
 			, A.ATCH_FILE_ID      atchFileId
 			, A.ATCH_REG_ID       atchRegId
 		FROM TB_REST_INFO A, TB_REVIEW_BOARD B
-		WHERE A.USER_ID = B.USER_ID
+		WHERE A.USER_ID = B.USER_ID-
 	</select>
 	
 	<select id="restReview" parameterClass="String" resultClass="kr.or.ddit.review.vo.ReviewVO">
@@ -114,4 +115,5 @@
 		AND   A.REST_CODE = #restCode#
 		AND A.BOARD_DELETE = 'N'
 	</select>
+	
 </sqlMap>
